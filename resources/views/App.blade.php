@@ -1,5 +1,5 @@
 @php
- $userPermissions = Auth::user()->getUserPermissions();
+ // $userPermissions = Auth::user()->getUserPermissions();
 @endphp
 
 <!DOCTYPE html>

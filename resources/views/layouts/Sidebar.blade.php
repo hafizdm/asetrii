@@ -36,7 +36,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">Master Data</li>
-          @if($userPermissions->contains('name', 'lecturer-read'))
+          {{-- @if($userPermissions->contains('name', 'lecturer-read'))
             <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="route('lecturer.index')" />
           @endif
 
@@ -60,7 +60,7 @@
 
           @if($userPermissions->contains('name', 'access-right-read'))
             <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
-          @endif
+          @endif --}}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('category_id')
             ->references('id')->on('categories');
 
-            $table->unique(['name', 'group_by']);
+            $table->unique(['name', 'group_by']); 
         });
     }
 
