@@ -19,9 +19,8 @@ return new class extends Migration
             $table->uuid("kind_id");
             $table->uuid("merk_id");
             $table->uuid("unit_id");
-            $table->string("type");
+            $table->string("type"); // asset, non-asset
             $table->string("name");
-            $table->string("code")->nullable();
             $table->integer("year")->nullable();
             $table->string("notes")->nullable();
             $table->timestamps();

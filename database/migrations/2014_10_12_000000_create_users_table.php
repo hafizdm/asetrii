@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->string('name');
             $table->string('role');
-            $table->string('username')->unique();
+            $table->string('username')->unique(); //unique merupakan data yang tidak boleh sama
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

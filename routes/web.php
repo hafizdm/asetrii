@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    AuthController
+    AuthController,
+    CategoryController,
 };
 
 /*
@@ -27,4 +28,11 @@ Route::group(['middleware' => ['auth']], function() {
     })->name('app');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+    Route::get('kategori/list', [CategoryController::class, 'list'])->name('category.list');
+    Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
+    Route::delete('kategori/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::patch('kategori/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('kategori/{id}', [CategoryController::class, 'show'])->name('category.show');
+    Route::post('kategori', [CategoryController::class, 'store'])->name('category.store');
 });

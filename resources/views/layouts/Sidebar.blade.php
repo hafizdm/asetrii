@@ -54,11 +54,11 @@
 
           @if($userPermissions->contains('name', 'classroom-read'))
             <x-nav-item :icon="'fas fa-book-open'" :text="'Ruang Kelas'" :href="route('classroom.index')" />
-          @endif
+          @endif --}}
 
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
 
-          @if($userPermissions->contains('name', 'access-right-read'))
+          {{-- @if($userPermissions->contains('name', 'access-right-read'))
             <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
           @endif --}}
         </ul>
