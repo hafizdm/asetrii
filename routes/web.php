@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    Select2Controller,
     AuthController,
     CategoryController,
+    StockController,
+    ItemController
 };
 
 /*
@@ -35,4 +38,29 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('kategori/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('kategori/{id}', [CategoryController::class, 'show'])->name('category.show');
     Route::post('kategori', [CategoryController::class, 'store'])->name('category.store');
+
+    Route::get('stock/detail/{id}', [StockController::class, 'show'])->name('stock.show');
+    Route::delete('stock/{id}', [StockController::class, 'destroy'])->name('stock.destroy');
+    Route::get('stock', [StockController::class, 'index'])->name('stock.index');
+    Route::post('stock', [StockController::class, 'store'])->name('stock.store');
+
+    Route::get('item', [ItemController::class, 'index'])->name('item.index');
+    Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');
+
+    Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
+        Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
+    });
+
+    // Route::get('mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');
+    // Route::delete('mata-kuliah/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+    // Route::patch('mata-kuliah/{id}', [CourseController::class, 'update'])->name('course.update');
+    // Route::post('mata-kuliah', [CourseController::class, 'store'])->name('course.store');
+    // Route::get('mata-kuliah', [CourseController::class, 'index'])->name('course.index');
+
+    // Route::delete('ruang-kelas/hapus-peserta/{id}', [ClassroomController::class, 'removeParticipants'])->name('classroom.remove-participants');
+    // Route::get('ruang-kelas/detail/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
+    // Route::delete('ruang-kelas/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
+    // Route::patch('ruang-kelas/{id}', [ClassroomController::class, 'update'])->name('classroom.update');
+    // Route::post('ruang-kelas', [ClassroomController::class, 'store'])->name('classroom.store');
+    // Route::get('ruang-kelas', [ClassroomController::class, 'index'])->name('classroom.index');
 });

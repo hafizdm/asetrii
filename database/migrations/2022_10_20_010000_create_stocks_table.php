@@ -17,11 +17,11 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->uuid("division_id");
             $table->uuid("user_id");
+            $table->string("type"); // asset, non-asset
             $table->string("name");
             $table->string("location");
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 

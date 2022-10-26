@@ -42,42 +42,66 @@
                     <x-col class="mb-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
                     </x-col>
-                </x-in-text>
-                    <x-col>
-                        <x-table :thead="['Nama', 'Catatan', 'Aksi']">
-                            @foreach($data as $row)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->label }}</td>
-                                    <td>{{ $row->notes }}</td>
-                                    <td>
-                                        <a
-                                            href="{{ route('category.show', $row->id) }}"
-                                            class="btn btn-warning"
-                                            title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <form style=" display:inline!important;" method="POST" action="{{ route('category.destroy', $row->id) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-in-select
-                                                :label="'Jenis'"
-                                                :name="'category_id'"
-                                                :options="$optionKinds"
-                                                :placeholder="'Pilih Jenis'"
-                                                :required="true">
-                                            </x-in-select>
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger"
-                                                onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
-                                                title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
+                    <x-col>
+                        @if($categoryGroup == 'merks')
+                            <x-table :thead="['Jenis', 'Nama', 'Catatan', 'Aksi']">
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->parent->label }}</td>
+                                        <td>{{ $row->label }}</td>
+                                        <td>{{ $row->notes }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('category.show', $row->id) }}"
+                                                class="btn btn-warning"
+                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('category.destroy', $row->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </x-table>
+                        @else
+                            <x-table :thead="['Nama', 'Catatan', 'Aksi']">
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->label }}</td>
+                                        <td>{{ $row->notes }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('category.show', $row->id) }}"
+                                                class="btn btn-warning"
+                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('category.destroy', $row->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </x-table>
+                        @endif
                     </x-col>
-                    {{-- ine!important;" method --}}
+
                     <x-col class="d-flex justify-content-end">
                         {{ $data->links() }}
                     </x-col>

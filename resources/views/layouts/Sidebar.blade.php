@@ -36,31 +36,15 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">Master Data</li>
-          {{-- @if($userPermissions->contains('name', 'lecturer-read'))
-            <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="route('lecturer.index')" />
-          @endif
-
-          @if($userPermissions->contains('name', 'learner-read'))
-            <x-nav-item :icon="'fas fa-users'" :text="'Mahasiswa'" :href="route('learner.index')" />
-          @endif
-
-          @if($userPermissions->contains('name', 'course-master-read'))
-            <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Mata Kuliah'" :href="route('course-master.index')" />
-          @endif
-
-          @if($userPermissions->contains('name', 'course-read'))
-            <x-nav-item :icon="'fab fa-leanpub'" :text="'Mata Kuliah'" :href="route('course.index')" />
-          @endif
-
-          @if($userPermissions->contains('name', 'classroom-read'))
-            <x-nav-item :icon="'fas fa-book-open'" :text="'Ruang Kelas'" :href="route('classroom.index')" />
-          @endif --}}
-
-          <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
-
-          {{-- @if($userPermissions->contains('name', 'access-right-read'))
-            <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
-          @endif --}}
+            <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
+          <li class="nav-header">Aset Tetap</li>
+            <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'asset'])" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="'#'" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="'#'" />
+            <li class="nav-header">Aset Tidak Tetap</li>
+            <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'non-asset'])" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="'#'" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="'#'" />
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

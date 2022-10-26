@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('item_id')
             ->references('id')->on('items');
 
-            $table->index('user_id');
+            $table->index('user_id');       
             $table->foreign('user_id')
             ->references('id')->on('users');
         });
