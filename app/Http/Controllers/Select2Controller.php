@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\{
-    Category
+    Category,
+    Stock
 };
 
 class Select2Controller extends Controller
@@ -15,10 +16,18 @@ class Select2Controller extends Controller
         $data = [];
         if ($request->category) {
             $data = Category::where('group_by', $request->category)
+                            ->where('category_id', $request->category_id ?? null)
                             ->get()->toArray();
         }
 
-        // var_dump($data);
+
+        return response()->json($data);
+    }
+
+    public function stocks(Request $request)
+    {
+        $data = Stock::all()->toArray();
+
 
         return response()->json($data);
     }

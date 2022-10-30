@@ -20,8 +20,6 @@ return new class extends Migration
             $table->uuid("merk_id");
             $table->uuid("unit_id");
             $table->string("name");
-            $table->integer("year")->nullable();
-            $table->string("notes")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

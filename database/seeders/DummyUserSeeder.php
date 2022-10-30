@@ -17,10 +17,10 @@ class DummyUserSeeder extends Seeder
     {
         User::create([
             'name' => 'Dummy User',
-            'username' => 'admin.a',
+            'username' => 'admin.b',
             'role' => 'admin',
-            'email' => 'admin.a@gmail.com',
-            'password' => bcrypt('admin.a'),
+            'email' => 'admin.b@gmail.com',
+            'password' => bcrypt('admin.b'),
         ]);
     }
 }

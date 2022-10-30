@@ -46,9 +46,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('item', [ItemController::class, 'index'])->name('item.index');
     Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');
+    Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
+    Route::post('item', [ItemController::class, 'store'])->name('item.store');
 
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
+        Route::get('stock', [Select2Controller::class, 'stocks'])->name('stocks');
     });
 
     // Route::get('mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');

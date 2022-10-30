@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('item_codes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('item_id');
-            $table->string('code')->unique();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('item_details', function (Blueprint $table) {
+            $table->index('item_id');
+            $table->foreign('item_id')
+            ->references('id')->on('items');
         });
     }
 
@@ -29,6 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_codes');
+        Schema::table('item_details', function (Blueprint $table) {
+            $table->dropForeign(['item_id']);
+            $table->dropIndex(['item_id']);
+        });
     }
 };
