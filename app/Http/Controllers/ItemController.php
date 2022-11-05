@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\LoanRecord;
 use App\Models\Stock;
 use App\Models\StockLog;
 use Illuminate\Http\Request;
@@ -63,12 +64,21 @@ class ItemController extends Controller
 
         $item = Item::create($req);
 
-        StockLog::create([
-            'item_id' => $item->id,
-            'user_id' => auth()->user()->id,
-            'type' => 'in',
-            'amount' 
-        ]);
+        if ($stock->type == 'asset') {
+            // LoanRecord::create([
+            //     'item_id' => $item->id,
+            //     'is_in' => true,
+            //     'notes' => 'init from system',
+            //     'created' => now()
+            // ]);
+        } else {
+            // StockLog::create([
+            //     'item_id' => $item->id,
+            //     'user_id' => auth()->user()->id,
+            //     'type' => 'in',
+            // ]);
+        }
+
 
         return redirect()->back()->with('success', 'item berhasil ditambahkan.');
     }

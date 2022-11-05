@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\{
     Category,
+    Item,
     Stock
 };
 
@@ -28,6 +29,13 @@ class Select2Controller extends Controller
     {
         $data = Stock::all()->toArray();
 
+
+        return response()->json($data);
+    }
+
+    public function items(Request $request)
+    {
+        $data = Item::all()->toArray();
 
         return response()->json($data);
     }

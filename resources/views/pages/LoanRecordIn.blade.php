@@ -1,0 +1,134 @@
+@extends('App')
+
+@section('content-header', 'Stock Masuk')
+
+@section('content')
+    <x-content>
+        <x-row>
+            <x-card-collapsible>
+                <x-row>
+                    <x-col class="mb-3">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+                    </x-col>
+
+                    <x-col>
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">
+                            @foreach($data as $row)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->created }}</td>
+                                    <td>{{ $row->item->kind->name }}</td>
+                                    <td>{{ $row->item->merk->name }}</td>
+                                    <td>{{ $row->item->name }}</td>
+                                    <td>{{ $row->item->code }}</td>
+                                    <td>{{ $row->notes }}</td>
+                                    <td>
+                                        <a
+                                            href="{{ route('item.index', ['stock_id' => $row->id]) }}"
+                                            class="btn btn-primary"
+                                            title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
+                                        <a
+                                            href="{{ route('stock.show', $row->id) }}"
+                                            class="btn btn-warning"
+                                            title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+
+                                        <form style=" display:inline!important;" method="POST" action="{{ route('stock.destroy', $row->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger"
+                                                onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </x-table>
+                    </x-col>
+
+                    <x-col class="d-flex justify-content-end">
+                        {{ $data->links() }}
+                    </x-col>
+                </x-row>
+            </x-card-collapsible>
+        </x-row>
+    </x-content>
+
+    <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
+        <form style="width: 100%" action="{{ route('stock.store') }}" method="POST">
+            @csrf
+            @method('POST')
+            <input type="hidden" name="type" value="{{ app('request')->input('type') }}">
+            <x-row>
+                <x-in-text
+                    :label="'Pilih Tanggal'"
+                    :placeholder="'Pilih Tanggal'"
+                    :col="6"
+                    :name="'created'"
+                    :type="'date'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Barang'"
+                    :placeholder="'Pilih Barang'"
+                    :col="6"
+                    :name="'item_id'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Catatan'"
+                    :placeholder="'Masukkan catatan'"
+                    :col="12"
+                    :name="'notes'"
+                    :required="true"></x-in-text>
+            </x-row>
+
+            <x-col class="text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </x-col>
+        </form>
+    </x-modal>
+@endsection
+
+@push('js')
+    <input type="hidden" id="url-items" value="{{ route('select2.items') }}">
+
+    <script>
+        $(function() {
+            $('#item_id').select2({
+                theme: 'bootstrap4',
+                allowClear: true,
+                placeholder: {
+                    id: '',
+                    text: 'Pilih Barang'
+                },
+                ajax: {
+                    url: $('#url-items').val(),
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        let query = {
+                            keyword: params.term
+                        }
+
+                        return query;
+                    },
+                    processResults: function (data) {
+                        let x = $.map(data, function (obj) {
+                            return {
+                                id: obj.id,
+                                text: [obj.code, obj.name].join(' - ')
+                            };
+                        });
+
+                        return {
+                            results: x
+                        };
+                    },
+                    cache: false
+                }
+            });
+        });
+    </script>
+@endpush

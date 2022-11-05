@@ -67,5 +67,4 @@ class StockController extends Controller
     {
 
     }
-
 }

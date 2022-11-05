@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     AuthController,
     CategoryController,
     StockController,
-    ItemController
+    ItemController,
+    LoanRecordController
 };
 
 /*
@@ -45,6 +46,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('stock-in', [StockController::class, 'indexIn'])->name('stock.index-in');
     Route::post('stock', [StockController::class, 'store'])->name('stock.store');
 
+    Route::get('record-in', [LoanRecordController::class, 'recordIn'])->name('record-in.index');
+
     Route::get('item', [ItemController::class, 'index'])->name('item.index');
     Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
@@ -53,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
         Route::get('stock', [Select2Controller::class, 'stocks'])->name('stocks');
+        Route::get('items', [Select2Controller::class, 'items'])->name('items');
     });
 
     // Route::get('mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');
@@ -67,4 +71,6 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::patch('ruang-kelas/{id}', [ClassroomController::class, 'update'])->name('classroom.update');
     // Route::post('ruang-kelas', [ClassroomController::class, 'store'])->name('classroom.store');
     // Route::get('ruang-kelas', [ClassroomController::class, 'index'])->name('classroom.index');
+
+    // php artisan make:controller LoanRecordController
 });

@@ -7,24 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Stock extends Model
+class LoanRecord extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $guarded = [];
 
-    public function responsible()
+    public function item()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Item::class);
     }
 
-    public function division()
-    {
-        return $this->belongsTo(Category::class, 'division_id');
-    }
-
-    public function items()
-    {
-        return $this->hasMany(Item::class);
-    }
 }

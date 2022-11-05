@@ -27,4 +27,9 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function loanRecords()
+    {
+        return $this->hasMany(LoanRecord::class);
+    }
 }
