@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->uuid("item_id");
             $table->uuid("user_id");
-            $table->string("type");
+            $table->string("type"); // between: in or out
             $table->decimal("amount", 15, 2);
             $table->string("reciever")->nullable();
             $table->string("role")->nullable();

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->uuid("merk_id");
             $table->uuid("unit_id");
             $table->string("name");
+            $table->string("code")->unique()->nullable();
+            $table->tinyInteger("status")->default(1); // 1: tersedia, 0: tidak tersedia
             $table->timestamps();
             $table->softDeletes();
         });

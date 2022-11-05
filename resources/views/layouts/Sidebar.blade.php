@@ -39,7 +39,7 @@
             <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
           <li class="nav-header">Aset Tetap</li>
             <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'asset'])" />
-            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="'#'" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="route('stock.index-in', ['type' => 'asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="'#'" />
             <li class="nav-header">Aset Tidak Tetap</li>
             <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'non-asset'])" />

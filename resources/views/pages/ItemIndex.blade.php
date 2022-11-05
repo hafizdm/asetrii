@@ -13,15 +13,16 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'stock', 'Satuan', 'Aksi']">
+                        <x-table :thead="['Code', 'Jenis', 'Merk', 'Nama Barang', 'Satuan', 'Status', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->code }}</td>
                                     <td>{{ $row->kind->label }}</td>
                                     <td>{{ $row->merk->label }}</td>
                                     <td>{{ $row->name }}</td>
-                                    <td>1</td>
                                     <td>{{ $row->unit->label }}</td>
+                                    <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
                                     <td>
                                         <a
                                             href="{{ route('item.show', $row->id) }}"
@@ -83,6 +84,12 @@
                     :placeholder="'Masukkan Nama'"
                     :col="6"
                     :name="'name'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Kode'"
+                    :placeholder="'Masukkan Kode Barang'"
+                    :col="6"
+                    :name="'code'"
                     :required="true"></x-in-text>
             </x-row>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Stock;
+use App\Models\StockLog;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
@@ -28,6 +30,7 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
+        $stock = Stock::find($request->stock_id)->first();
         $req = $request->validate([
             'stock_id' => ['required', 'uuid', 'exists:stocks,id'],
             'unit_id' => [
@@ -52,9 +55,20 @@ class ItemController extends Controller
                 })
             ],
             'name' => 'required',
+            'code' => [
+                Rule::requiredIf(fn() => ($stock->type ?? null) == 'asset'),
+                'unique:items,code'
+            ],
         ]);
 
         $item = Item::create($req);
+
+        StockLog::create([
+            'item_id' => $item->id,
+            'user_id' => auth()->user()->id,
+            'type' => 'in',
+            'amount' 
+        ]);
 
         return redirect()->back()->with('success', 'item berhasil ditambahkan.');
     }
