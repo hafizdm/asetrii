@@ -26,7 +26,7 @@ class ItemController extends Controller
 
     public function show($id)
     {
-
+            
     }
 
     public function store(Request $request)
@@ -85,7 +85,13 @@ class ItemController extends Controller
 
     public function destroy($id)
     {
+        $row = $this->get($id); 
 
+        $data = new Item($row);
+        $data ->setAccessControl($this->getAccessControl());
+        $data ->delete();
+
+        return redirect()->back()->with('message', 'Data berhasil dihapus');
     }
 
 }

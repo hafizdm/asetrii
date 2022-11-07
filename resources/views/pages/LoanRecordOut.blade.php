@@ -1,6 +1,6 @@
 @extends('App')
 
-@section('content-header', 'Stock')
+@section('content-header', 'Stock Masuk')
 
 @section('content')
     <x-content>
@@ -12,14 +12,18 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Nama Stok', 'Divisi', 'Responsible', 'Lokasi', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->division->label }}</td>
-                                    <td>{{ $row->responsible->name }}</td>
-                                    <td>{{ $row->location }}</td>
+                                    <td>{{ $row->created }}</td>
+                                    <td>{{ $row->item->kind->name }}</td>
+                                    <td>{{ $row->item->merk->name }}</td>
+                                    <td>{{ $row->item->name }}</td>
+                                    <td>{{ $row->item->code }}</td>
+                                    <td>{{ $row->receipt }}</td>
+                                    <td>{{ $row->position }}</td>
+                                    <td>{{ $row->notes }}</td>
                                     <td>
                                         <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
@@ -30,7 +34,7 @@
                                             class="btn btn-warning"
                                             title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <form style=" display:inline!important;" method="DELETE" action="{{ route('stock.destroy', $row->id) }}">
+                                        <form style=" display:inline!important;" method="POST" action="{{ route('stock.destroy', $row->id) }}">
                                             @csrf
                                             @method('DELETE')
 
@@ -60,23 +64,36 @@
             @method('POST')
             <input type="hidden" name="type" value="{{ app('request')->input('type') }}">
             <x-row>
-                <x-in-select
-                    :label="'Divisi'"
-                    :placeholder="'Pilih Divisi'"
-                    :col="6"
-                    :name="'division_id'"
-                    :required="true"></x-in-select>
                 <x-in-text
-                    :label="'Nama Stock'"
-                    :placeholder="'Masukkan Nama Stock'"
+                    :label="'Pilih Tanggal'"
+                    :placeholder="'Pilih Tanggal'"
                     :col="6"
-                    :name="'name'"
+                    :name="'created'"
+                    :type="'date'"
                     :required="true"></x-in-text>
                 <x-in-text
-                    :label="'Lokasi'"
-                    :placeholder="'Masukkan Lokasi'"
+                    :label="'Barang'"
+                    :placeholder="'Pilih Barang'"
+                    :col="6"
+                    :name="'item_id'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Penerima'"
+                    :placeholder="'Masukkan Penerima'"
                     :col="12"
-                    :name="'location'"
+                    :name="'receipt'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Jabatan'"
+                    :placeholder="'Masukkan Jabatan'"
+                    :col="12"
+                    :name="'position'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Catatan'"
+                    :placeholder="'Masukkan catatan'"
+                    :col="12"
+                    :name="'notes'"
                     :required="true"></x-in-text>
             </x-row>
 
@@ -89,24 +106,23 @@
 @endsection
 
 @push('js')
-    <input type="hidden" id="url-categories" value="{{ route('select2.categories') }}">
+    <input type="hidden" id="url-items" value="{{ route('select2.items') }}">
 
     <script>
         $(function() {
-            $('#division_id').select2({
+            $('#item_id').select2({
                 theme: 'bootstrap4',
                 allowClear: true,
                 placeholder: {
                     id: '',
-                    text: 'Pilih Divisi'
+                    text: 'Pilih Barang'
                 },
                 ajax: {
-                    url: $('#url-categories').val(),
+                    url: $('#url-items').val(),
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
                         let query = {
-                            category: 'divisions',
                             keyword: params.term
                         }
 
@@ -116,7 +132,7 @@
                         let x = $.map(data, function (obj) {
                             return {
                                 id: obj.id,
-                                text: [obj.ref_no, obj.name].join(' - ')
+                                text: [obj.code, obj.name].join(' - ')
                             };
                         });
 

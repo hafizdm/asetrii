@@ -43,6 +43,24 @@ class StockController extends Controller
         return view('pages.StockInIndex', compact('data'));
     }
 
+    public function indexOut(Request $request)
+    {
+        $req = $request->validate([
+            'type' => ['required', 'in:asset,non-asset'],
+        ]);
+
+        $data = [];
+        if ($request->type) {
+            $data = Stock::where('type', $request->type)
+                            ->paginate(15)
+                            ->withQueryString();
+        } else {
+            return redirect()->back()->withErrors('Stock tidak ditemukan.');
+        }
+
+        return view('pages.StockOutIndex', compact('data'));
+    }
+
     public function show($id)
     {
     }

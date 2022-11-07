@@ -18,7 +18,7 @@
                                     <td>{{ $row->location }}</td>
                                     <td>
                                         <a
-                                            href="{{ route('record-in.index', ['stock_id' => $row->id]) }}"
+                                            href="{{ route('record-out.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Detail Asset"><i class="fas fa-chalkboard"></i></a>
                                     </td>

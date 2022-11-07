@@ -46,7 +46,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('stock-in', [StockController::class, 'indexIn'])->name('stock.index-in');
     Route::post('stock', [StockController::class, 'store'])->name('stock.store');
 
+    Route::get('stock-out', [StockController::class, 'indexOut'])->name('stock.index-out');
+
     Route::get('record-in', [LoanRecordController::class, 'recordIn'])->name('record-in.index');
+    Route::get('record-out', [LoanRecordController::class, 'recordOut'])->name('record-out.index');
 
     Route::get('item', [ItemController::class, 'index'])->name('item.index');
     Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');

@@ -17,7 +17,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Daftar Kelas</a>
+            <a href="#" class="nav-link">Daftar Asset RII</a>
           </li>
           <li class="nav-item">
             {{-- <a href="{{ route('classroom.my-classroom') }}" class="nav-link">Kelasku</a> --}}
