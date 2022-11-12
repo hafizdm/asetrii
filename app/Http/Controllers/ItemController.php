@@ -24,9 +24,19 @@ class ItemController extends Controller
         return view('pages.ItemIndex', compact('data'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $post = Item::find($id)->update($request->all());
+
+        return back()->with('success','Data telah diperbaharui!');
+
+    }
+
     public function show($id)
     {
-            
+        $data = $this->getModel($id);
+
+        return view('pages.ItemIndex', compact('data'));
     }
 
     public function store(Request $request)
@@ -85,13 +95,9 @@ class ItemController extends Controller
 
     public function destroy($id)
     {
-        $row = $this->get($id); 
+        Item::destroy($id);
 
-        $data = new Item($row);
-        $data ->setAccessControl($this->getAccessControl());
-        $data ->delete();
-
-        return redirect()->back()->with('message', 'Data berhasil dihapus');
+        return redirect()->back()->with('message', 'Item berhasil dihapus.');
     }
 
 }

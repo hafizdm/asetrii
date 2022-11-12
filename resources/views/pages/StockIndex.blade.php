@@ -30,7 +30,7 @@
                                             class="btn btn-warning"
                                             title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <form style=" display:inline!important;" method="DELETE" action="{{ route('stock.destroy', $row->id) }}">
+                                        <form style=" display:inline!important;" method="POST" action="{{ route('stock.destroy', $row->id) }}">
                                             @csrf
                                             @method('DELETE')
 

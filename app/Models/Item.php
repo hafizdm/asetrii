@@ -32,4 +32,6 @@ class Item extends Model
     {
         return $this->hasMany(LoanRecord::class);
     }
+
+  
 }

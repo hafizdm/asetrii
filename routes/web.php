@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('item', [ItemController::class, 'index'])->name('item.index');
     Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');
+    Route::patch('item/detail/{id}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
 

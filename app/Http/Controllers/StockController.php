@@ -63,6 +63,7 @@ class StockController extends Controller
 
     public function show($id)
     {
+        
     }
 
     public function store(Request $request)
@@ -83,6 +84,8 @@ class StockController extends Controller
 
     public function destroy($id)
     {
+        Stock::destroy($id);
 
+        return redirect()->back()->with('message', 'Kategori berhasil dihapus.');
     }
 }
