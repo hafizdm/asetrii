@@ -35,7 +35,11 @@ class Select2Controller extends Controller
 
     public function items(Request $request)
     {
-        $data = Item::all()->toArray();
+        if (!isset($request->stock_id) || empty($request->stock_id))
+            return response()->json([]);
+
+        $data = Item::where('stock_id', $request->stock_id)
+                    ->get()->toArray();
 
         return response()->json($data);
     }

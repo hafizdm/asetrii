@@ -1,8 +1,9 @@
 @extends('App')
 
-@section('content-header', 'Stock Masuk')
+@section('content-header', 'Stock Keluar')
 
 @section('content')
+    {{-- {{ dd(App\Models\Item::all()) }} --}}
     <x-content>
         <x-row>
             <x-card-collapsible>
@@ -12,20 +13,18 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->created }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>
                                     <td>{{ $row->item->name }}</td>
                                     <td>{{ $row->item->code }}</td>
-                                    <td>{{ $row->receipt }}</td>
-                                    <td>{{ $row->position }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        <a
+                                        {{-- <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
@@ -43,7 +42,7 @@
                                                 class="btn btn-danger"
                                                 onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
                                                 title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,10 +58,10 @@
     </x-content>
 
     <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
-        <form style="width: 100%" action="{{ route('stock.store') }}" method="POST">
+        <form style="width: 100%" action="{{ route('record-out.store') }}" method="POST">
             @csrf
             @method('POST')
-            <input type="hidden" name="type" value="{{ app('request')->input('type') }}">
+            {{-- <input type="hidden" name="type" value="{{ app('request')->input('type') }}"> --}}
             <x-row>
                 <x-in-text
                     :label="'Pilih Tanggal'"
@@ -76,18 +75,6 @@
                     :placeholder="'Pilih Barang'"
                     :col="6"
                     :name="'item_id'"
-                    :required="true"></x-in-text>
-                <x-in-text
-                    :label="'Penerima'"
-                    :placeholder="'Masukkan Penerima'"
-                    :col="12"
-                    :name="'receipt'"
-                    :required="true"></x-in-text>
-                <x-in-text
-                    :label="'Jabatan'"
-                    :placeholder="'Masukkan Jabatan'"
-                    :col="12"
-                    :name="'position'"
                     :required="true"></x-in-text>
                 <x-in-text
                     :label="'Catatan'"
@@ -107,41 +94,32 @@
 
 @push('js')
     <input type="hidden" id="url-items" value="{{ route('select2.items') }}">
+    <input type="hidden" id="stock_id" value="{{ app('request')->input('stock_id') }}">
 
     <script>
         $(function() {
-            $('#item_id').select2({
-                theme: 'bootstrap4',
-                allowClear: true,
-                placeholder: {
-                    id: '',
-                    text: 'Pilih Barang'
-                },
-                ajax: {
-                    url: $('#url-items').val(),
-                    dataType: 'json',
-                    delay: 500,
-                    data: function (params) {
-                        let query = {
-                            keyword: params.term
-                        }
+        // fetch with fetch api and send with query params
+        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val())
+            .then(response => response.json())
+            .then(data => {
+                let x = $.map(data, function (obj) {
+                    return {
+                        id: obj.id,
+                        text: [obj.code, obj.name].join(' - ')
+                    };
+                });
 
-                        return query;
+                $('#item_id').select2({
+                    theme: 'bootstrap4',
+                    allowClear: true,
+                    placeholder: {
+                        id: '',
+                        text: 'Pilih Barang'
                     },
-                    processResults: function (data) {
-                        let x = $.map(data, function (obj) {
-                            return {
-                                id: obj.id,
-                                text: [obj.code, obj.name].join(' - ')
-                            };
-                        });
-
-                        return {
-                            results: x
-                        };
-                    },
-                    cache: false
-                }
+                    data: x
+                });
+            }).catch(error => {
+                console.log(error);
             });
         });
     </script>
