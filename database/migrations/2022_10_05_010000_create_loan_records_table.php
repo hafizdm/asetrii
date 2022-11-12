@@ -17,7 +17,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('item_id');
             $table->boolean('is_in')->default(true); // true: in, false: out
-            $table->boolean('is_out')->default(false); // true: in, false: out
             $table->string('notes')->nullable();
             $table->string('receipt')->nullable();
             $table->string('position')->nullable();
