@@ -1,6 +1,6 @@
 @extends('App')
 
-@section('content-header', 'Stock')
+@section('content-header', 'Daftar Stock')
 
 @section('content')
     <x-content>

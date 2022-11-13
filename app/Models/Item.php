@@ -33,5 +33,16 @@ class Item extends Model
         return $this->hasMany(LoanRecord::class);
     }
 
-  
+    public function stockLog()
+    {
+        return $this->hasMany(StockLog::class);
+    }
+
+    public function countStock()
+    {
+        $in = $this->stockLog()->where('type', 'in')->sum('amount');
+        $out = $this->stockLog()->where('type', 'out')->sum('amount');
+
+        return $in - $out;
+    }
 }

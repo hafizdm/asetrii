@@ -95,11 +95,12 @@
 @push('js')
     <input type="hidden" id="url-items" value="{{ route('select2.items') }}">
     <input type="hidden" id="stock_id" value="{{ app('request')->input('stock_id') }}">
+    <input type="hidden" id="status" value="0">
 
     <script>
         $(function() {
         // fetch with fetch api and send with query params
-        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val())
+        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val() + '&status=' + $('#status').val())
             .then(response => response.json())
             .then(data => {
                 let x = $.map(data, function (obj) {

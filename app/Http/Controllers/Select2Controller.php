@@ -38,8 +38,13 @@ class Select2Controller extends Controller
         if (!isset($request->stock_id) || empty($request->stock_id))
             return response()->json([]);
 
-        $data = Item::where('stock_id', $request->stock_id)
-                    ->get()->toArray();
+        $data = Item::where('stock_id', $request->stock_id);
+
+        if (isset($request->status)) {
+            $data = $data->where('status', $request->status);
+        }
+
+        $data = $data->get()->toArray();
 
         return response()->json($data);
     }
