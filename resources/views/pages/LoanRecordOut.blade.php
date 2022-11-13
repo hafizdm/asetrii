@@ -13,7 +13,7 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -22,6 +22,8 @@
                                     <td>{{ $row->item->merk->name }}</td>
                                     <td>{{ $row->item->name }}</td>
                                     <td>{{ $row->item->code }}</td>
+                                    <td>{{ $row->receipt }}</td>
+                                    <td>{{ $row->position }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
                                         {{-- <a
@@ -77,11 +79,24 @@
                     :name="'item_id'"
                     :required="true"></x-in-text>
                 <x-in-text
+                    :label="'Penerima'"
+                    :placeholder="'Masukkan Penerima'"
+                    :col="12"
+                    :name="'receipt'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Jabatan'"
+                    :placeholder="'Masukkan Jabatan'"
+                    :col="12"
+                    :name="'position'"
+                    :required="true"></x-in-text>
+                <x-in-text
                     :label="'Catatan'"
                     :placeholder="'Masukkan catatan'"
                     :col="12"
                     :name="'notes'"
-                    :required="true"></x-in-text>
+                    :required="true"></x-in-text>      
+
             </x-row>
 
             <x-col class="text-right">
