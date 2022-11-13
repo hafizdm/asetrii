@@ -7,7 +7,7 @@ use App\Models\LoanRecord;
 use App\Models\Stock;
 use App\Models\StockLog;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -41,7 +41,9 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $stock = Stock::find($request->stock_id)->first();
+        // $stock = Stock::find($request->stock_id)->first();
+        $stock = DB::table('stocks')->where('id', $request->stock_id)->first();
+
         $req = $request->validate([
             'stock_id' => ['required', 'uuid', 'exists:stocks,id'],
             'unit_id' => [
@@ -67,7 +69,7 @@ class ItemController extends Controller
             ],
             'name' => 'required',
             'code' => [
-                Rule::requiredIf(fn() => ($stock->type ?? null) == 'asset'),
+                Rule::requiredIf(fn() => $stock->type === 'asset'),
                 'unique:items,code'
             ],
         ]);
@@ -82,11 +84,13 @@ class ItemController extends Controller
             //     'created' => now()
             // ]);
         } else {
-            // StockLog::create([
-            //     'item_id' => $item->id,
-            //     'user_id' => auth()->user()->id,
-            //     'type' => 'in',
-            // ]);
+            StockLog::create([
+                'item_id' => $item->id,
+                'user_id' => auth()->user()->id,
+                'type' => 'in',
+                'amount' => 0,
+                'moved_at' => now()
+            ]);
         }
 
 

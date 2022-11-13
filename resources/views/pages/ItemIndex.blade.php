@@ -1,7 +1,13 @@
 @extends('App')
 
+@php
+    $stock = app('request')->input('stock_id'); // mencari nilai stock_id yang berada di url
+    $stock = \App\Models\Stock::find($stock); // mencari data stock berdasarkan id
+    $header = $stock->type == 'asset' ? 'Daftar Asset' : 'Daftar Non-Asset'; // menentukan header yang akan ditampilkan
+    $header .= ' : ' . $stock->name; // menambahkan nama stock ke header
+@endphp
 
-@section('content-header', 'Item')
+@section('content-header', $header)
 
 @section('content')
     <x-content>
@@ -12,38 +18,74 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
                     </x-col>
 
-                    <x-col>
-                        <x-table :thead="['Code', 'Jenis', 'Merk', 'Nama Barang', 'Satuan', 'Status', 'Aksi']">
-                            @foreach($data as $row)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->code }}</td>
-                                    <td>{{ $row->kind->label }}</td>
-                                    <td>{{ $row->merk->label }}</td>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->unit->label }}</td>
-                                    <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
-                                    <td>
-                                        <a
-                                            href="{{ route('item.show', $row->id) }}"
-                                            class="btn btn-warning"
-                                            title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+                    @if($stock->type == 'asset')
+                        <x-col>
+                            <x-table :thead="['Code', 'Jenis', 'Merk', 'Nama Barang', 'Satuan', 'Status', 'Aksi']">
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->code }}</td>
+                                        <td>{{ $row->kind->label }}</td>
+                                        <td>{{ $row->merk->label }}</td>
+                                        <td>{{ $row->name }}</td>
+                                        <td>{{ $row->unit->label }}</td>
+                                        <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('item.show', $row->id) }}"
+                                                class="btn btn-warning"
+                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <form style=" display:inline!important;" method="POST" action="{{ route('item.destroy', $row->id) }}">
-                                            @csrf
-                                            @method('DELETE')
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('item.destroy', $row->id) }}">
+                                                @csrf
+                                                @method('DELETE')
 
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger"
-                                                onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
-                                                title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </x-table>
-                    </x-col>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </x-table>
+                        </x-col>
+                    @endif
+
+                    @if($stock->type == 'non-asset')
+                        <x-col>
+                            <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'Stok', 'Satuan', 'Aksi']">
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->kind->label }}</td>
+                                        <td>{{ $row->merk->label }}</td>
+                                        <td>{{ $row->name }}</td>
+                                        <td>{{ $row->countStock() }}</td>
+                                        <td>{{ $row->unit->label }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('item.show', $row->id) }}"
+                                                class="btn btn-warning"
+                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('item.destroy', $row->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </x-table>
+                        </x-col>
+                    @endif
 
                     <x-col class="d-flex justify-content-end">
                         {{ $data->links() }}
@@ -53,52 +95,99 @@
         </x-row>
     </x-content>
 
-    <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
-        <form style="width: 100%" action="{{ route('item.store') }}" method="POST">
-            @csrf
-            @method('POST')
+    {{-- modal tambah untuk asset --}}
+    @if($stock->type == 'asset')
+        <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
+            <form style="width: 100%" action="{{ route('item.store') }}" method="POST">
+                @csrf
+                @method('POST')
 
-            <input type="hidden" name="stock_id" value="{{ app('request')->input('stock_id') }}">
+                <input type="hidden" name="stock_id" value="{{ app('request')->input('stock_id') }}">
 
-            <x-row>
-                <x-in-select
-                    :label="'Pilih Jenis'"
-                    :placeholder="'Pilih Jenis'"
-                    :col="6"
-                    :name="'kind_id'"
-                    :required="true"></x-in-select>
-                <x-in-select
-                    :label="'Pilih Merk'"
-                    :placeholder="'Pilih Merk'"
-                    :col="6"
-                    :name="'merk_id'"
-                    :required="true"></x-in-select>
-                <x-in-select
-                    :label="'Pilih Satuan'"
-                    :placeholder="'Pilih Satuan'"
-                    :col="6"
-                    :name="'unit_id'"
-                    :required="true"></x-in-select>
-                <x-in-text
-                    :label="'Nama'"
-                    :placeholder="'Masukkan Nama'"
-                    :col="6"
-                    :name="'name'"
-                    :required="true"></x-in-text>
-                <x-in-text
-                    :label="'Kode'"
-                    :placeholder="'Masukkan Kode Barang'"
-                    :col="6"
-                    :name="'code'"
-                    :required="true"></x-in-text>
-            </x-row>
+                <x-row>
+                    <x-in-select
+                        :label="'Pilih Jenis'"
+                        :placeholder="'Pilih Jenis'"
+                        :col="6"
+                        :name="'kind_id'"
+                        :required="true"></x-in-select>
+                    <x-in-select
+                        :label="'Pilih Merk'"
+                        :placeholder="'Pilih Merk'"
+                        :col="6"
+                        :name="'merk_id'"
+                        :required="true"></x-in-select>
+                    <x-in-select
+                        :label="'Pilih Satuan'"
+                        :placeholder="'Pilih Satuan'"
+                        :col="6"
+                        :name="'unit_id'"
+                        :required="true"></x-in-select>
+                    <x-in-text
+                        :label="'Nama'"
+                        :placeholder="'Masukkan Nama'"
+                        :col="6"
+                        :name="'name'"
+                        :required="true"></x-in-text>
+                    <x-in-text
+                        :label="'Kode'"
+                        :placeholder="'Masukkan Kode Barang'"
+                        :col="6"
+                        :name="'code'"
+                        :required="true"></x-in-text>
+                </x-row>
 
-            <x-col class="text-right">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </x-col>
-        </form>
-    </x-modal>
+                <x-col class="text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </x-col>
+            </form>
+        </x-modal>
+    @endif
+
+    {{-- modal tambah untuk non asset --}}
+    @if($stock->type == 'non-asset')
+        <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
+            <form style="width: 100%" action="{{ route('item.store') }}" method="POST">
+                @csrf
+                @method('POST')
+
+                <input type="hidden" name="stock_id" value="{{ app('request')->input('stock_id') }}">
+
+                <x-row>
+                    <x-in-select
+                        :label="'Pilih Jenis'"
+                        :placeholder="'Pilih Jenis'"
+                        :col="6"
+                        :name="'kind_id'"
+                        :required="true"></x-in-select>
+                    <x-in-select
+                        :label="'Pilih Merk'"
+                        :placeholder="'Pilih Merk'"
+                        :col="6"
+                        :name="'merk_id'"
+                        :required="true"></x-in-select>
+                    <x-in-select
+                        :label="'Pilih Satuan'"
+                        :placeholder="'Pilih Satuan'"
+                        :col="6"
+                        :name="'unit_id'"
+                        :required="true"></x-in-select>
+                    <x-in-text
+                        :label="'Nama'"
+                        :placeholder="'Masukkan Nama'"
+                        :col="6"
+                        :name="'name'"
+                        :required="true"></x-in-text>
+                </x-row>
+
+                <x-col class="text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </x-col>
+            </form>
+        </x-modal>
+    @endif
 @endsection
 
 @push('js')
@@ -219,3 +308,4 @@
         });
     </script>
 @endpush
+
