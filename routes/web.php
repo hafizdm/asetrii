@@ -7,7 +7,9 @@ use App\Http\Controllers\{
     CategoryController,
     StockController,
     ItemController,
-    LoanRecordController
+    ItemNonAssetController,
+    LoanRecordController,
+    StockNonAssetController
 };
 
 /*
@@ -60,10 +62,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
 
+    Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
+
+
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
         Route::get('stock', [Select2Controller::class, 'stocks'])->name('stocks');
         Route::get('items', [Select2Controller::class, 'items'])->name('items');
+
+    
+    
+
     });
 
     // Route::get('mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');

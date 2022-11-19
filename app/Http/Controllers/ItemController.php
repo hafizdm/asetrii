@@ -44,6 +44,8 @@ class ItemController extends Controller
         // $stock = Stock::find($request->stock_id)->first();
         $stock = DB::table('stocks')->where('id', $request->stock_id)->first();
 
+        // dd($request->all());     
+
         $req = $request->validate([
             'stock_id' => ['required', 'uuid', 'exists:stocks,id'],
             'unit_id' => [
@@ -72,8 +74,20 @@ class ItemController extends Controller
                 Rule::requiredIf(fn() => $stock->type === 'asset'),
                 'unique:items,code'
             ],
+            'ukuran'=> [
+                'nullable', 'max:255'
+            ],
+
+            'amount' => [
+                'nullable', 'numeric'
+            ],
         ]);
 
+        if ($stock->type == 'non-asset'){
+            $amount = $req['amount'];
+            unset($req['amount']);
+        }
+        
         $item = Item::create($req);
 
         if ($stock->type == 'asset') {
@@ -88,7 +102,7 @@ class ItemController extends Controller
                 'item_id' => $item->id,
                 'user_id' => auth()->user()->id,
                 'type' => 'in',
-                'amount' => 0,
+                'amount' => $amount,
                 'moved_at' => now()
             ]);
         }

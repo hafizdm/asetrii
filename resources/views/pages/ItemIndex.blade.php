@@ -55,7 +55,7 @@
 
                     @if($stock->type == 'non-asset')
                         <x-col>
-                            <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'Stok', 'Satuan', 'Aksi']">
+                            <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'Stok', 'Ukuran', 'Satuan', 'Aksi']">
                                 @foreach($data as $row)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -63,6 +63,7 @@
                                         <td>{{ $row->merk->label }}</td>
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->countStock() }}</td>
+                                        <td>{{ $row->ukuran }}</td>
                                         <td>{{ $row->unit->label }}</td>
                                         <td>
                                             <a
@@ -178,6 +179,18 @@
                         :placeholder="'Masukkan Nama'"
                         :col="6"
                         :name="'name'"
+                        :required="true"></x-in-text>
+                    <x-in-text
+                        :label="'Stock'"
+                        :placeholder="'Jumlah Stock'"
+                        :col="6"
+                        :name="'amount'"
+                        :required="true"></x-in-text>
+                    <x-in-text
+                        :label="'Ukuran Barang'"
+                        :placeholder="'Masukkan Ukuran'"
+                        :col="6"
+                        :name="'ukuran'"
                         :required="true"></x-in-text>
                 </x-row>
 

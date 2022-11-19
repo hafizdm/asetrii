@@ -21,6 +21,7 @@ return new class extends Migration
             $table->uuid("unit_id");
             $table->string("name");
             $table->string("code")->unique()->nullable();
+            $table->string("ukuran")->nullable();
             $table->tinyInteger("status")->default(1); // 1: tersedia, 0: tidak tersedia
             $table->timestamps();
             $table->softDeletes();

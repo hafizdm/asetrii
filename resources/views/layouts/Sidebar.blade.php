@@ -43,7 +43,7 @@
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="route('stock.index-out', ['type' => 'asset'])" />
             <li class="nav-header">Aset Tidak Tetap</li>
             <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'non-asset'])" />
-            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="'#'" />
+            <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="route('record-non-asset-in.index', ['type' => 'non-asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="'#'" />
         </ul>
       </nav>
