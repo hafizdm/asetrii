@@ -15,7 +15,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         if (!isset($request->stock_id) || empty($request->stock_id))
-            return redirect()->back()->withErrors(['msg' => 'stock id tidak ditemukan']);
+            return redirect()->back()->withErrors(['msg' => 'item dengan stock tersebut tidak ditemukan']);
 
         $data = Item::where('stock_id', $request->stock_id)
                     ->paginate(15)
@@ -44,7 +44,7 @@ class ItemController extends Controller
         // $stock = Stock::find($request->stock_id)->first();
         $stock = DB::table('stocks')->where('id', $request->stock_id)->first();
 
-        // dd($request->all());     
+        // dd($request->all());
 
         $req = $request->validate([
             'stock_id' => ['required', 'uuid', 'exists:stocks,id'],
@@ -87,7 +87,7 @@ class ItemController extends Controller
             $amount = $req['amount'];
             unset($req['amount']);
         }
-        
+
         $item = Item::create($req);
 
         if ($stock->type == 'asset') {

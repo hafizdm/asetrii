@@ -69,24 +69,5 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
         Route::get('stock', [Select2Controller::class, 'stocks'])->name('stocks');
         Route::get('items', [Select2Controller::class, 'items'])->name('items');
-
-    
-    
-
     });
-
-    // Route::get('mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');
-    // Route::delete('mata-kuliah/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
-    // Route::patch('mata-kuliah/{id}', [CourseController::class, 'update'])->name('course.update');
-    // Route::post('mata-kuliah', [CourseController::class, 'store'])->name('course.store');
-    // Route::get('mata-kuliah', [CourseController::class, 'index'])->name('course.index');
-
-    // Route::delete('ruang-kelas/hapus-peserta/{id}', [ClassroomController::class, 'removeParticipants'])->name('classroom.remove-participants');
-    // Route::get('ruang-kelas/detail/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
-    // Route::delete('ruang-kelas/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
-    // Route::patch('ruang-kelas/{id}', [ClassroomController::class, 'update'])->name('classroom.update');
-    // Route::post('ruang-kelas', [ClassroomController::class, 'store'])->name('classroom.store');
-    // Route::get('ruang-kelas', [ClassroomController::class, 'index'])->name('classroom.index');
-
-    // php artisan make:controller LoanRecordController
 });

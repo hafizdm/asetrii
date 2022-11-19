@@ -1,8 +1,9 @@
 @extends('App')
 
-@section('content-header', 'Daftar Stock')
+@section('content-header', 'Stock Masuk')
 
 @section('content')
+    {{-- {{ dd(App\Models\Item::all()) }} --}}
     <x-content>
         <x-row>
             <x-card-collapsible>
@@ -12,16 +13,17 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Nama Stok', 'Divisi', 'Responsible', 'Lokasi', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->division->label }}</td>
-                                    <td>{{ $row->responsible->name }}</td>
-                                    <td>{{ $row->location }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
+                                    <td>{{ $row->item->kind->name }}</td>
+                                    <td>{{ $row->item->merk->name }}</td>
+                                    <td>{{ $row->item->name }}</td>
+                                    <td>{{ $row->notes }}</td>
                                     <td>
-                                        <a
+                                        {{-- <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
@@ -39,7 +41,7 @@
                                                 class="btn btn-danger"
                                                 onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
                                                 title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -55,28 +57,29 @@
     </x-content>
 
     <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
-        <form style="width: 100%" action="{{ route('stock.store') }}" method="POST">
+        <form style="width: 100%" action="{{ route('record-in.store') }}" method="POST">
             @csrf
             @method('POST')
-            <input type="hidden" name="type" value="{{ app('request')->input('type') }}">
+            {{-- <input type="hidden" name="type" value="{{ app('request')->input('type') }}"> --}}
             <x-row>
-                <x-in-select
-                    :label="'Divisi'"
-                    :placeholder="'Pilih Divisi'"
-                    :col="6"
-                    :name="'division_id'"
-                    :required="true"></x-in-select>
                 <x-in-text
-                    :label="'Nama Stock'"
-                    :placeholder="'Masukkan Nama Stock'"
+                    :label="'Pilih Tanggal'"
+                    :placeholder="'Pilih Tanggal'"
                     :col="6"
-                    :name="'name'"
+                    :name="'created'"
+                    :type="'date'"
                     :required="true"></x-in-text>
                 <x-in-text
-                    :label="'Lokasi'"
-                    :placeholder="'Masukkan Lokasi'"
+                    :label="'Barang'"
+                    :placeholder="'Pilih Barang'"
+                    :col="6"
+                    :name="'item_id'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Catatan'"
+                    :placeholder="'Masukkan catatan'"
                     :col="12"
-                    :name="'location'"
+                    :name="'notes'"
                     :required="true"></x-in-text>
             </x-row>
 
@@ -89,43 +92,34 @@
 @endsection
 
 @push('js')
-    <input type="hidden" id="url-categories" value="{{ route('select2.categories') }}">
+    <input type="hidden" id="url-items" value="{{ route('select2.items') }}">
+    <input type="hidden" id="stock_id" value="{{ app('request')->input('stock_id') }}">
+    <input type="hidden" id="status" value="0">
 
     <script>
         $(function() {
-            $('#division_id').select2({
-                theme: 'bootstrap4',
-                allowClear: true,
-                placeholder: {
-                    id: '',
-                    text: 'Pilih Divisi'
-                },
-                ajax: {
-                    url: $('#url-categories').val(),
-                    dataType: 'json',
-                    delay: 500,
-                    data: function (params) {
-                        let query = {
-                            category: 'divisions',
-                            keyword: params.term
-                        }
+        // fetch with fetch api and send with query params
+        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val() + '&status=' + $('#status').val())
+            .then(response => response.json())
+            .then(data => {
+                let x = $.map(data, function (obj) {
+                    return {
+                        id: obj.id,
+                        text: [obj.code, obj.name].join(' - ')
+                    };
+                });
 
-                        return query;
+                $('#item_id').select2({
+                    theme: 'bootstrap4',
+                    allowClear: true,
+                    placeholder: {
+                        id: '',
+                        text: 'Pilih Barang'
                     },
-                    processResults: function (data) {
-                        let x = $.map(data, function (obj) {
-                            return {
-                                id: obj.id,
-                                text: [obj.ref_no, obj.label].join(' - ')
-                            };
-                        });
-
-                        return {
-                            results: x
-                        };
-                    },
-                    cache: false
-                }
+                    data: x
+                });
+            }).catch(error => {
+                console.log(error);
             });
         });
     </script>
