@@ -181,6 +181,7 @@
                         :name="'name'"
                         :required="true"></x-in-text>
                     <x-in-text
+                        :type="'number'"
                         :label="'Stock'"
                         :placeholder="'Jumlah Stock'"
                         :col="6"
