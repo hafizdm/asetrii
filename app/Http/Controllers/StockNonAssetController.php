@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Stock;
+use App\Models\StockLog;
+use DateTime;
 use Illuminate\Http\Request;
 
 class StockNonAssetController extends Controller
@@ -25,4 +27,28 @@ class StockNonAssetController extends Controller
 
         return view('pages.StockInIndex', compact('data'));
     }
+
+    public function store(Request $request)
+    {
+        {
+            
+    
+            $req = $request->validate([
+                'moved_at' => ['required', 'date'],
+                'item_id' => ['required'],
+                'amount' => ['required', 'numeric'],
+                'notes' => ['nullable']
+
+            ]);
+            
+            $req['user_id'] = auth()->user()->id;
+            $req['type'] = 'in';
+            StockLog::create($req);
+            
+    
+            return redirect()->back()->with('success', 'Data berhasil disimpan');
+        }
+    
+    }
+
 }

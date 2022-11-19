@@ -13,7 +13,7 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Keterangan', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Jumlah', 'Ukuran', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -21,6 +21,8 @@
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>
                                     <td>{{ $row->item->name }}</td>
+                                    <td>{{ (int)$row->amount }}</td>
+                                    <td>{{ $row->item->ukuran }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
                                         {{-- <a
@@ -57,7 +59,7 @@
     </x-content>
 
     <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
-        <form style="width: 100%" action="{{ route('record-in.store') }}" method="POST">
+        <form style="width: 100%" action="{{ route('record-in-non-asset.index') }}" method="POST">
             @csrf
             @method('POST')
             {{-- <input type="hidden" name="type" value="{{ app('request')->input('type') }}"> --}}
@@ -66,7 +68,7 @@
                     :label="'Pilih Tanggal'"
                     :placeholder="'Pilih Tanggal'"
                     :col="6"
-                    :name="'created'"
+                    :name="'moved_at'"
                     :type="'date'"
                     :required="true"></x-in-text>
                 <x-in-text
@@ -74,6 +76,12 @@
                     :placeholder="'Pilih Barang'"
                     :col="6"
                     :name="'item_id'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Jumlah'"
+                    :placeholder="'Masukkan Jumlah'"
+                    :col="6"
+                    :name="'amount'"
                     :required="true"></x-in-text>
                 <x-in-text
                     :label="'Catatan'"
@@ -99,13 +107,13 @@
     <script>
         $(function() {
         // fetch with fetch api and send with query params
-        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val() + '&status=' + $('#status').val())
+        fetch($('#url-items').val() + '?stock_id=' + $('#stock_id').val() + '&status=')
             .then(response => response.json())
             .then(data => {
                 let x = $.map(data, function (obj) {
                     return {
                         id: obj.id,
-                        text: [obj.code, obj.name].join(' - ')
+                        text: [obj.ukuran, obj.name].join(' - ')
                     };
                 });
 

@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
 
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
+    Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');
 
 
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
