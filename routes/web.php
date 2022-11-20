@@ -65,6 +65,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
     Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');
 
+    Route::get('record-non-asset-out', [StockNonAssetController::class, 'indexOut'])->name('record-non-asset-out.index');
+    Route::post('record-non-asset-out', [StockNonAssetController::class, 'storeRecordOut'])->name('record-out-non-asset.index');
+
+
+
 
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');

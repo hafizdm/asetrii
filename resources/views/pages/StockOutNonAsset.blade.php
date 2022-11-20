@@ -1,4 +1,4 @@
-{{-- @extends('App')
+@extends('App')
 
 @section('content-header', 'Stock')
 
@@ -18,7 +18,7 @@
                                     <td>{{ $row->location }}</td>
                                     <td>
                                         <a
-                                            href="{{ route('record-in.index', ['stock_id' => $row->id]) }}"
+                                            href="{{ route('record-out-non-asset.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Detail Asset"><i class="fas fa-chalkboard"></i></a>
                                     </td>
@@ -34,4 +34,4 @@
             </x-card-collapsible>
         </x-row>
     </x-content>
-@endsection --}}
+@endsection
