@@ -1,6 +1,12 @@
 @extends('App')
 
-@section('content-header', 'Stock Masuk')
+@php
+    $stockCategoryId = app('request')->input('stock_id');
+
+    $stockCategory = \App\Models\Stock::find($stockCategoryId);
+@endphp
+
+@section('content-header', 'Stock Keluar Asset Tidak Tetap:' . $stockCategory->name)
 
 @section('content')
     {{-- {{ dd(App\Models\Item::all()) }} --}}
@@ -13,7 +19,7 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Jumlah', 'Ukuran','Penerima','Jabatan','Keterangan', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Jumlah', 'Ukuran', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -21,10 +27,10 @@
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>
                                     <td>{{ $row->item->name }}</td>
-                                    <td>{{ (int)$row->amount }}</td>
+                                    <td>{{ (int) $row->amount }}</td>
                                     <td>{{ $row->item->ukuran }}</td>
-                                    <td>{{ $row->receipt }}</td>
-                                    <td>{{ $row->position }}</td>
+                                    <td>{{ $row->reciever }}</td>
+                                    <td>{{ $row->role }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
                                         {{-- <a
@@ -89,13 +95,13 @@
                     :label="'Penerima'"
                     :placeholder="'Masukkan Nama Penerima'"
                     :col="6"
-                    :name="'receipt'"
+                    :name="'reciever'"
                     :required="true"></x-in-text>
                 <x-in-text
                     :label="'Jabatan'"
                     :placeholder="'Masukkan Jabatan'"
                     :col="6"
-                    :name="'position'"
+                    :name="'role'"
                     :required="true"></x-in-text>
                 <x-in-text
                     :label="'Catatan'"

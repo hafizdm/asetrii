@@ -49,13 +49,28 @@ class LoanRecordController extends Controller
         $stockId = $request->input('stock_id');
 
         $stock = Stock::find($stockId);
-        $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
-                            ->select('loan_records.*')
-                            ->where('items.stock_id', $stockId)
-                            ->where('loan_records.is_in', false)
-                            ->paginate(15);
 
-        return view('pages.LoanRecordOut', compact('data'));
+        if (!$stock) {
+            return redirect()->back()->withErrors(['msg' => 'Stock tidak ditemukan']);
+        }
+
+        if ($stock->type == 'asset') {
+            $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
+                                ->select('loan_records.*')
+                                ->where('items.stock_id', $stockId)
+                                ->where('loan_records.is_in', false)
+                                ->paginate(15);
+
+            return view('pages.LoanRecordOut', compact('data'));
+        } else {
+            $data = StockLog::leftJoin('items', 'items.id', '=', 'stock_logs.item_id')
+                                ->select('stock_logs.*')
+                                ->where('items.stock_id', $stockId)
+                                ->where('stock_logs.type', 'out')
+                                ->paginate(15);
+
+            return view('pages.StockLogOut', compact('data'));
+        }
     }
 
     public function storeRecordIn(Request $request)

@@ -12,7 +12,7 @@ class StockNonAssetController extends Controller
 {
     public function indexIn(Request $request)
     {
-        $req = $request->validate([
+        $request->validate([
             'type' => ['required', 'in:asset,non-asset'],
         ]);
 
@@ -49,49 +49,42 @@ class StockNonAssetController extends Controller
 
     public function store(Request $request)
     {
-        {
-            
-    
-            $req = $request->validate([
-                'moved_at' => ['required', 'date'],
-                'item_id' => ['required'],
-                'amount' => ['required', 'numeric'],
-                'notes' => ['nullable']
 
-            ]);
-            
-            $req['user_id'] = auth()->user()->id;
-            $req['type'] = 'in';
-            StockLog::create($req);
-            
-    
-            return redirect()->back()->with('success', 'Data berhasil disimpan');
-        }
-    
+        $req = $request->validate([
+            'moved_at' => ['required', 'date'],
+            'item_id' => ['required'],
+            'amount' => ['required', 'numeric'],
+            'notes' => ['nullable']
+
+        ]);
+
+        $req['user_id'] = auth()->user()->id;
+        $req['type'] = 'in';
+        StockLog::create($req);
+
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
-    
+
     public function storeRecordOut(Request $request)
     {
-        {
-            
-    
-            $req = $request->validate([
-                'moved_at' => ['required', 'date'],
-                'item_id' => ['required'],
-                'amount' => ['required', 'numeric'],
-                'notes' => ['nullable']
 
-            ]);
-            
-            $req['user_id'] = auth()->user()->id;
-            $req['type'] = 'out';
-            StockLog::create($req);
-            
-    
-            return redirect()->back()->with('success', 'Data berhasil disimpan');
-        }
-    
+        $req = $request->validate([
+            'moved_at' => ['required', 'date'],
+            'item_id' => ['required'],
+            'amount' => ['required', 'numeric'],
+            'notes' => ['nullable'],
+            'receiver' => ['required', 'max:255'],
+            'role' => ['required', 'max:255'],
+        ]);
+
+        $req['user_id'] = auth()->user()->id;
+        $req['type'] = 'out';
+        StockLog::create($req);
+
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
 
