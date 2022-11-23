@@ -40,11 +40,24 @@ class Select2Controller extends Controller
 
         $data = Item::where('stock_id', $request->stock_id);
 
+        // we must know if stock asset or non-asset
+
         if (isset($request->status)) {
             $data = $data->where('status', $request->status);
         }
 
         $data = $data->get()->toArray();
+
+        $stock = Stock::find($request->stock_id);
+        if ($stock->type == 'non-asset') {
+            foreach ($data as $index => $val) {
+                $totalLeft = Item::where('id', $val['id'])->first()->countStock();
+
+                $val['amount'] = $totalLeft;
+
+                $data[$index] = $val;
+            }
+        }
 
         return response()->json($data);
     }
