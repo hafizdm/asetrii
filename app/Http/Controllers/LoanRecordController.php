@@ -13,16 +13,9 @@ class LoanRecordController extends Controller
     public function recordIn(Request $request)
     {
         $stockId = $request->input('stock_id');
-
-        // search loan record, where item with stock id
-
-        // 1. cari data pinjaman yang masuk, dengan filter berdasarkan stock apa, dan statusnya (kolom is_in = true)
-
         $stock = Stock::find($stockId);
 
-        if (!$stock) {
-            return redirect()->back()->withErrors(['msg' => 'Stock tidak ditemukan']);
-        }
+        if (!$stock) return redirect()->back()->withErrors(['msg' => 'Stock tidak ditemukan']);
 
         if ($stock->type == 'asset') {
             $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
@@ -47,12 +40,9 @@ class LoanRecordController extends Controller
     public function recordOut(Request $request)
     {
         $stockId = $request->input('stock_id');
-
         $stock = Stock::find($stockId);
 
-        if (!$stock) {
-            return redirect()->back()->withErrors(['msg' => 'Stock tidak ditemukan']);
-        }
+        if (!$stock) return redirect()->back()->withErrors(['msg' => 'Stock tidak ditemukan']);
 
         if ($stock->type == 'asset') {
             $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
@@ -76,24 +66,22 @@ class LoanRecordController extends Controller
     public function storeRecordIn(Request $request)
     {
         $data = $request->all();
-
         $data['is_in'] = true;
 
         LoanRecord::create($data);
         Item::find($data['item_id'])->update(['status' => 1]);
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+        return redirect()->back()->with('message', 'Data berhasil disimpan');
     }
 
     public function storeRecordOut(Request $request)
     {
         $data = $request->all();
-
         $data['is_in'] = false;
 
         LoanRecord::create($data);
         Item::find($data['item_id'])->update(['status' => 0]);
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+        return redirect()->back()->with('message', 'Data berhasil disimpan');
     }
 }

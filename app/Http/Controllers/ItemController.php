@@ -18,18 +18,17 @@ class ItemController extends Controller
             return redirect()->back()->withErrors(['msg' => 'item dengan stock tersebut tidak ditemukan']);
 
         $data = Item::where('stock_id', $request->stock_id)
-                    ->paginate(15)
-                    ->withQueryString();
+            ->paginate(15)
+            ->withQueryString();
 
-        return view('pages.ItemIndex', compact('data'));
+        return view('pages.e', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
         $post = Item::find($id)->update($request->all());
 
-        return back()->with('success','Data telah diperbaharui!');
-
+        return back()->with('message', 'Data telah diperbaharui!');
     }
 
     public function show($id)
@@ -71,10 +70,10 @@ class ItemController extends Controller
             ],
             'name' => 'required',
             'code' => [
-                Rule::requiredIf(fn() => $stock->type === 'asset'),
+                Rule::requiredIf(fn () => $stock->type === 'asset'),
                 'unique:items,code'
             ],
-            'ukuran'=> [
+            'ukuran' => [
                 'nullable', 'max:255'
             ],
 
@@ -83,7 +82,7 @@ class ItemController extends Controller
             ],
         ]);
 
-        if ($stock->type == 'non-asset'){
+        if ($stock->type == 'non-asset') {
             $amount = $req['amount'];
             unset($req['amount']);
         }
@@ -108,7 +107,7 @@ class ItemController extends Controller
         }
 
 
-        return redirect()->back()->with('success', 'item berhasil ditambahkan.');
+        return redirect()->back()->with('message', 'item berhasil ditambahkan.');
     }
 
     public function destroy($id)
@@ -117,5 +116,4 @@ class ItemController extends Controller
 
         return redirect()->back()->with('message', 'Item berhasil dihapus.');
     }
-
 }
