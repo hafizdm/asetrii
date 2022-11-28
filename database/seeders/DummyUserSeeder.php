@@ -16,11 +16,27 @@ class DummyUserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Dummy User',
-            'username' => 'admin.b',
+            'name' => 'Dummy User Admin',
+            'username' => 'admin',
             'role' => 'admin',
-            'email' => 'admin.b@gmail.com',
-            'password' => bcrypt('admin.b'),
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin'),
+        ]);
+
+        User::create([
+            'name' => 'Dummy User Super Admin',
+            'username' => 'superadmin',
+            'role' => 'superadmin',
+            'email' => 'superadmin@gmail.com',
+            'password' => bcrypt('superadmin'),
+        ]);
+
+        User::create([
+            'name' => 'Dummy User Director',
+            'username' => 'director',
+            'role' => 'director',
+            'email' => 'director@gmail.com',
+            'password' => bcrypt('director'),
         ]);
     }
 }
