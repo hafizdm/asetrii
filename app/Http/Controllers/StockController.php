@@ -15,9 +15,17 @@ class StockController extends Controller
 
         $data = [];
         if ($request->type) {
-            $data = Stock::where('type', $request->type)
-                            ->paginate(15)
-                            ->withQueryString();
+            $user = auth()->user();
+            if ($user->role == 'admin') {
+                $data = Stock::where('type', $request->type)
+                    ->where('user_id', $user->id)
+                    ->paginate(15)
+                    ->withQueryString();
+            } else if ($user->role == 'director') {
+                $data = Stock::where('type', $request->type)
+                    ->paginate(15)
+                    ->withQueryString();
+            }
         } else {
             return redirect()->back()->withErrors('Stock tidak ditemukan.');
         }
@@ -34,8 +42,8 @@ class StockController extends Controller
         $data = [];
         if ($request->type) {
             $data = Stock::where('type', $request->type)
-                            ->paginate(15)
-                            ->withQueryString();
+                ->paginate(15)
+                ->withQueryString();
         } else {
             return redirect()->back()->withErrors('Stock tidak ditemukan.');
         }
@@ -52,8 +60,8 @@ class StockController extends Controller
         $data = [];
         if ($request->type) {
             $data = Stock::where('type', $request->type)
-                            ->paginate(15)
-                            ->withQueryString();
+                ->paginate(15)
+                ->withQueryString();
         } else {
             return redirect()->back()->withErrors('Stock tidak ditemukan.');
         }

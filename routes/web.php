@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    AccountController,
     Select2Controller,
     AuthController,
     CategoryController,
@@ -68,8 +69,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-non-asset-out', [StockNonAssetController::class, 'indexOut'])->name('record-non-asset-out.index');
     Route::post('record-non-asset-out', [StockNonAssetController::class, 'storeRecordOut'])->name('record-out-non-asset.index');
 
-
-
+    Route::post('accounts', [AccountController::class, 'store'])->name('account.store');
+    Route::get('accounts', [AccountController::class, 'index'])->name('account.index');
+    Route::delete('accounts/{id}', [AccountController::class, 'destroy'])->name('account.destroy');
+    Route::get('accounts/{id}', [AccountController::class, 'show'])->name('account.show');
+    Route::patch('accounts/{id}', [AccountController::class, 'update'])->name('account.update');
 
     Route::group(['prefix' => 'select2', 'as' => 'select2.'], function() {
         Route::get('kategori', [Select2Controller::class, 'categories'])->name('categories');
