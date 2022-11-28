@@ -75,7 +75,7 @@ class StockNonAssetController extends Controller
             'item_id' => ['required'],
             'amount' => ['required', 'numeric'],
             'notes' => ['nullable'],
-            'receiver' => ['required', 'max:255'],
+            'reciever' => ['required', 'max:255'],
             'role' => ['required', 'max:255'],
         ]);
 
