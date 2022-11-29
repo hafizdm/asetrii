@@ -22,7 +22,7 @@ class LoanRecordController extends Controller
             ->select('loan_records.*')
             ->where('items.stock_id', $stockId)
             ->where('loan_records.is_in', true)
-            ->paginate(15);
+            ->paginate(5);
 
             return view('pages.LoanRecordIn', compact('data'));
         } else {
@@ -49,7 +49,7 @@ class LoanRecordController extends Controller
                                 ->select('loan_records.*')
                                 ->where('items.stock_id', $stockId)
                                 ->where('loan_records.is_in', false)
-                                ->paginate(15);
+                                ->paginate(5);
 
             return view('pages.LoanRecordOut', compact('data'));
         } else {

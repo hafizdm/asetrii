@@ -14,14 +14,18 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->has('search')){
+            $data = Item::where('name', 'like', '%' . request('search') . '%')->paginate(10);
+        }
+
         if (!isset($request->stock_id) || empty($request->stock_id))
             return redirect()->back()->withErrors(['msg' => 'item dengan stock tersebut tidak ditemukan']);
 
         $data = Item::where('stock_id', $request->stock_id)
-            ->paginate(15)
+            ->paginate(5)
             ->withQueryString();
 
-        return view('pages.e', compact('data'));
+        return view('pages.ItemIndex', compact('data'));
     }
 
     public function update(Request $request, $id)

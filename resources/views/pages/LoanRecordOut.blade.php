@@ -14,9 +14,9 @@
 
                     <x-col>
                         <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
-                            @foreach($data as $row)
+                            @foreach($data as $index => $row)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td scope="row">{{ $index + $data->firstItem() }}</td>
                                     <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>

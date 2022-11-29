@@ -57,6 +57,8 @@ class StockController extends Controller
             'type' => ['required', 'in:asset,non-asset'],
         ]);
 
+        // $req['user_id'] = auth()->user()->id;
+
         $data = [];
         if ($request->type) {
             $data = Stock::where('type', $request->type)

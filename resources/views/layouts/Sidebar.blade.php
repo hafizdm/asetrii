@@ -35,14 +35,14 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-header">Master Data</li>
-            @if(Auth::user()->role == 'admin')
-                <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
-            @endif
+              
 
-            @if(Auth::user()->role == 'superadmin')
-                <x-nav-item :icon="'fas fa-list'" :text="'Daftar Akun'" :href="route('account.index')" />
-            @endif
+        @if(Auth::user()->role == 'superadmin')
+          <li class="nav-header">Master Data</li>
+          
+          <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
+              <x-nav-item :icon="'fas fa-list'" :text="'Daftar Akun'" :href="route('account.index')" />
+        @endif
 
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'director')
           <li class="nav-header">Aset Tetap</li>

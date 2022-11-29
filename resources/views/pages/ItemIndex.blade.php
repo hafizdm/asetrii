@@ -18,12 +18,24 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
                     </x-col>
 
+                    
+                    <div class="row g-3 align-items-center mb-3">
+                        
+                        <div class="col-auto">
+                        <form action="pages.ItemIndex" method="GET">
+                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline">
+                        </form>
+                        </div>
+                        
+                      </div>
+                    
+
                     @if($stock->type == 'asset')
                         <x-col>
                             <x-table :thead="['Code', 'Jenis', 'Merk', 'Nama Barang', 'Satuan', 'Status', 'Aksi']">
-                                @foreach($data as $row)
+                                @foreach($data as $index => $row)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td scope="row">{{ $index + $data->firstItem() }}</td>
                                         <td>{{ $row->code }}</td>
                                         <td>{{ $row->kind->label }}</td>
                                         <td>{{ $row->merk->label }}</td>
@@ -50,15 +62,16 @@
                                     </tr>
                                 @endforeach
                             </x-table>
+                            {{ $data->links()}}
                         </x-col>
                     @endif
 
                     @if($stock->type == 'non-asset')
                         <x-col>
                             <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'Stok', 'Ukuran', 'Satuan', 'Aksi']">
-                                @foreach($data as $row)
+                                @foreach($data as $index => $row)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td scope="row">{{ $index + $data->firstItem() }}</td>
                                         <td>{{ $row->kind->label }}</td>
                                         <td>{{ $row->merk->label }}</td>
                                         <td>{{ $row->name }}</td>
@@ -85,11 +98,12 @@
                                     </tr>
                                 @endforeach
                             </x-table>
+                            {{ $data->links() }}
                         </x-col>
                     @endif
 
                     <x-col class="d-flex justify-content-end">
-                        {{ $data->links() }}
+                     
                     </x-col>
                 </x-row>
             </x-card-collapsible>
