@@ -16,7 +16,11 @@
                 <x-row>
                     <x-col class="mb-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+
+                        <a href="/exportpdf" class="btn btn-info">Export PDF</a>
                     </x-col>
+
+                    
 
                     
                     <div class="row g-3 align-items-center mb-3">

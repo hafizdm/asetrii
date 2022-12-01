@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+     <a href="#" class="brand-link">
       <img src="{{ asset('assets') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">{{ env('APP_NAME') }}</span>
     </a>
@@ -41,16 +41,17 @@
           <li class="nav-header">Master Data</li>
           
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
-              <x-nav-item :icon="'fas fa-list'" :text="'Daftar Akun'" :href="route('account.index')" />
+          <x-nav-item :icon="'fas fa-list'" :text="'Daftar Akun'" :href="route('account.index')" />
         @endif
 
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'director')
           <li class="nav-header">Aset Tetap</li>
-            <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'asset'])" />
+            <x-nav-item :icon="'fas fa-folder'" :text="'Stok'" :href="route('stock.index', ['type' => 'asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="route('stock.index-in', ['type' => 'asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="route('stock.index-out', ['type' => 'asset'])" />
-            <li class="nav-header">Aset Tidak Tetap</li>
-            <x-nav-item :icon="'fas fa-list'" :text="'Stok'" :href="route('stock.index', ['type' => 'non-asset'])" />
+           
+          <li class="nav-header">Aset Tidak Tetap</li>
+            <x-nav-item :icon="'fas fa-folder'" :text="'Stok'" :href="route('stock.index', ['type' => 'non-asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="route('record-non-asset-in.index', ['type' => 'non-asset'])" />
             <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="route('record-non-asset-out.index', ['type' => 'non-asset'])" />
         @endif

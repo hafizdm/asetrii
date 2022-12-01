@@ -120,4 +120,8 @@ class ItemController extends Controller
 
         return redirect()->back()->with('message', 'Item berhasil dihapus.');
     }
+
+    public function exportpdf(){
+        return 'berhasil';
+    }
 }

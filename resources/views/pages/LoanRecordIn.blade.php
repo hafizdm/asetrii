@@ -12,11 +12,21 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
                     </x-col>
 
+                    <div class="row g-3 align-items-center mb-3">
+                        
+                        <div class="col-auto">
+                        <form action="pages.ItemIndex" method="GET">
+                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline">
+                        </form>
+                        </div>
+                        
+                      </div>
+
                     <x-col>
                         <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">
-                            @foreach($data as $row)
+                            @foreach($data as $index => $row)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td scope="row">{{ $index + $data->firstItem() }}</td>
                                     <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>

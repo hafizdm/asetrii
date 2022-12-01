@@ -12,6 +12,10 @@ class LoanRecordController extends Controller
 {
     public function recordIn(Request $request)
     {
+        if ($request->has('search')){
+            $data = LoanRecord::where('name', 'like', '%' . request('search') . '%')->paginate(5);
+        }
+
         $stockId = $request->input('stock_id');
         $stock = Stock::find($stockId);
 
@@ -30,7 +34,7 @@ class LoanRecordController extends Controller
             ->select('stock_logs.*')
             ->where('items.stock_id', $stockId)
             ->where('stock_logs.type', 'in')
-            ->paginate(15);
+            ->paginate(5);
 
             return view('pages.StockLogIn', compact('data'));
         }
