@@ -21,7 +21,7 @@
                     <x-col>
                         <x-table :thead="['Kategori']">
                             @foreach($categories as $data)
-                                @if(Auth::user()->role == 'admin')
+                                @if(Auth::user()->role == 'superadmin')
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>

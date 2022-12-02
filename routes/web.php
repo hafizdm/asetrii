@@ -10,7 +10,8 @@ use App\Http\Controllers\{
     ItemController,
     ItemNonAssetController,
     LoanRecordController,
-    StockNonAssetController
+    StockNonAssetController,
+    DashboardController
 };
 
 /*
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['auth']], function() {
     })->name('app');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('kategori/list', [CategoryController::class, 'list'])->name('category.list');
     Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
