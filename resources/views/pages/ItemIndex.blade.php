@@ -1,8 +1,8 @@
 @extends('App')
 
 @php
-    $stock = app('request')->input('stock_id'); // mencari nilai stock_id yang berada di url
-    $stock = \App\Models\Stock::find($stock); // mencari data stock berdasarkan id
+    $stockId = app('request')->input('stock_id'); // mencari nilai stock_id yang berada di url
+    $stock = \App\Models\Stock::find($stockId); // mencari data stock berdasarkan id
     $header = $stock->type == 'asset' ? 'Daftar Asset' : 'Daftar Non-Asset'; // menentukan header yang akan ditampilkan
     $header .= ' : ' . $stock->name; // menambahkan nama stock ke header
 @endphp
@@ -17,22 +17,18 @@
                     <x-col class="mb-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
 
-                        <a href="/exportpdf" class="btn btn-info">Export PDF</a>
+                        <a href="{{ route('item.exports') . '?stock_id=' .  $stockId }}" target="_blank" class="btn btn-info">Export PDF</a>
                     </x-col>
 
-                    
-
-                    
                     <div class="row g-3 align-items-center mb-3">
-                        
+
                         <div class="col-auto">
                         <form action="pages.ItemIndex" method="GET">
                           <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline">
                         </form>
                         </div>
-                        
-                      </div>
-                    
+
+                    </div>
 
                     @if($stock->type == 'asset')
                         <x-col>
@@ -107,7 +103,7 @@
                     @endif
 
                     <x-col class="d-flex justify-content-end">
-                     
+
                     </x-col>
                 </x-row>
             </x-card-collapsible>

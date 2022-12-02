@@ -6,9 +6,12 @@ use App\Models\Item;
 use App\Models\LoanRecord;
 use App\Models\Stock;
 use App\Models\StockLog;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ItemController extends Controller
 {
@@ -121,7 +124,18 @@ class ItemController extends Controller
         return redirect()->back()->with('message', 'Item berhasil dihapus.');
     }
 
-    public function exportpdf(){
-        return 'berhasil';
+    public function exportpdf(Request $request)
+    {
+        // return 'berhasil';
+
+        $data = Item::where('stock_id', $request->stock_id)->get();
+        $stock = \App\Models\Stock::find($request->stock_id);
+        $header = $stock->type == 'asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
+        $header .= ' : ' . $stock->name;
+        $division = $stock->division->label;
+
+        $pdf = PDF::loadView('pdf.ItemsByStock', compact('data', 'header', 'division'));
+
+        return $pdf->stream('items.pdf');
     }
 }

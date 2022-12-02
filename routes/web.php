@@ -65,11 +65,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('item/detail/{id}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
+
     // Export PDF
-    Route::get('/exportpdf', [ItemController::class, 'exportpdf'])->name('exportpdf');
-
-
-
+    Route::get('/item-exports', [ItemController::class, 'exportpdf'])->name('item.exports');
 
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
     Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');
