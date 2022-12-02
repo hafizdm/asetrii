@@ -26,7 +26,7 @@ class LoanRecordController extends Controller
             ->select('loan_records.*')
             ->where('items.stock_id', $stockId)
             ->where('loan_records.is_in', true)
-            ->paginate(5);
+            ->paginate(5)->withQueryString();
 
             return view('pages.LoanRecordIn', compact('data'));
         } else {
@@ -34,7 +34,7 @@ class LoanRecordController extends Controller
             ->select('stock_logs.*')
             ->where('items.stock_id', $stockId)
             ->where('stock_logs.type', 'in')
-            ->paginate(5);
+            ->paginate(5)->withQueryString();
 
             return view('pages.StockLogIn', compact('data'));
         }
@@ -53,7 +53,7 @@ class LoanRecordController extends Controller
                                 ->select('loan_records.*')
                                 ->where('items.stock_id', $stockId)
                                 ->where('loan_records.is_in', false)
-                                ->paginate(5);
+                                ->paginate(5)->withQueryString();
 
             return view('pages.LoanRecordOut', compact('data'));
         } else {
@@ -61,7 +61,7 @@ class LoanRecordController extends Controller
                                 ->select('stock_logs.*')
                                 ->where('items.stock_id', $stockId)
                                 ->where('stock_logs.type', 'out')
-                                ->paginate(15);
+                                ->paginate(15)->withQueryString();
 
             return view('pages.StockLogOut', compact('data'));
         }
