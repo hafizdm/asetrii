@@ -1,14 +1,5 @@
 @extends('App')
 
-@php
-    $roles = [
-        ['value' => 'superadmin', 'text' => 'Super Admin'],
-        ['value' => 'admin', 'text' => 'Admin'],
-        ['value' => 'director', 'text' => 'Direktur'],
-    ];
-@endphp
-
-
 @section('content-header', 'Detail Account')
 
 @section('content')
@@ -16,7 +7,7 @@
         <x-row>
             <x-card-collapsible>
                 <x-row>
-                    <form style="width: 100%" action="{{ route('account.update', $data->id) }}" method="POST">
+                    <form style="width: 100%" action="{{ route('item.update', $data->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
 

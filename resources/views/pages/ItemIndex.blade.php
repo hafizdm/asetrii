@@ -17,7 +17,14 @@
                     <x-col class="mb-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
 
+                    @if($stock->type == 'asset')
                         <a href="{{ route('item.exports') . '?stock_id=' .  $stockId }}" target="_blank" class="btn btn-info">Export PDF</a>
+                    @endif
+
+                    @if($stock->type == 'non-asset')
+                    <a href="{{ route('item-non.exports') . '?stock_id=' .  $stockId }}" target="_blank" class="btn btn-info">Export PDF</a>
+                    @endif
+
                     </x-col>
 
                     <div class="row g-3 align-items-center mb-3">
@@ -30,6 +37,7 @@
 
                     </div>
 
+                    {{-- Index View untuk asset --}}
                     @if($stock->type == 'asset')
                         <x-col>
                             <x-table :thead="['Code', 'Jenis', 'Merk', 'Nama Barang', 'Satuan', 'Status', 'Aksi']">
@@ -44,7 +52,7 @@
                                         <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
                                         <td>
                                             <a
-                                                href="{{ route('item.show', $row->id) }}"
+                                                href="{{ route('item.update', $row->id) }}"
                                                 class="btn btn-warning"
                                                 title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
@@ -66,6 +74,7 @@
                         </x-col>
                     @endif
 
+                    {{-- index View untuk non-asset --}}
                     @if($stock->type == 'non-asset')
                         <x-col>
                             <x-table :thead="['Jenis', 'Merk', 'Nama Barang', 'Stok', 'Ukuran', 'Satuan', 'Aksi']">

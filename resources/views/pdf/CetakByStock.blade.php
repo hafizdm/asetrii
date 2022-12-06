@@ -48,40 +48,40 @@
 </head>
 <body>
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG ASSET TETAP</h3>
+    <h3>DATA BARANG NON ASSET</h3>
 
     <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>
     <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p>
 
     
-    <table class="data">
+    <table class="data">    
         <thead>
             <tr>
-                <th>Kode</th>
                 <th>Jenis</th>
                 <th>Merk</th>
                 <th>Nama Barang</th>
+                <th>Stok</th>
+                <th>Ukuran</th>
                 <th>Satuan</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $row)
                 <tr>
-                    <td>{{ $row->code }}</td>
                     <td>{{ $row->kind->label }}</td>
                     <td>{{ $row->merk->label }}</td>
                     <td>{{ $row->name }}</td>
+                    <td>{{ $row->countStock() }}</td>
+                    <td>{{ $row->ukuran }}</td>
                     <td>{{ $row->unit->label }}</td>
-                    <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
     <div class="signature-wrapper">
-        <p>Berikut merupakan daftar Asset Tetap tanggal {{ date('d/m/Y') }}</p>
+        <p>Berikut merupakan daftar Non-Asset tanggal {{ date('d/m/Y') }}</p>
         <table class="signature">
             <tr>
                 <td style="width: 50%; text-align: center;">

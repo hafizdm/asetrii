@@ -66,8 +66,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
 
-    // Export PDF
+    // Export PDF item asset
     Route::get('/item-exports', [ItemController::class, 'exportpdf'])->name('item.exports');
+
+    //Export PDF item non-asset
+    Route::get('/item-exports-non', [ItemController::class, 'cetakpdf'])->name('item-non.exports');
+
 
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
     Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');

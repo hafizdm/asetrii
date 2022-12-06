@@ -19,6 +19,7 @@ class AccountController extends Controller
     {
         $req = $request->validate([
             'name' => 'required',
+            'position' => 'required',
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'username' => ['required', Rule::unique('users', 'username')],
             'password' => ['required', 'min:8'],
@@ -57,6 +58,7 @@ class AccountController extends Controller
 
         $req = $request->validate([
             'name' => 'required',
+            'position' => 'required', 
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($data->id)],
             'username' => ['required', Rule::unique('users', 'username')->ignore($data->id)],
             'password' => ['nullable', 'min:8'],

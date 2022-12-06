@@ -40,7 +40,8 @@ class ItemController extends Controller
 
     public function show($id)
     {
-        $data = $this->getModel($id);
+        $data = Item::find($id);
+        if (!$data) return redirect()->route('item.index');
 
         return view('pages.ItemIndex', compact('data'));
     }
@@ -124,7 +125,7 @@ class ItemController extends Controller
         return redirect()->back()->with('message', 'Item berhasil dihapus.');
     }
 
-    public function exportpdf(Request $request)
+    public function exportpdf(Request $request) //untuk cetak item asset
     {
         // return 'berhasil';
 
@@ -135,6 +136,19 @@ class ItemController extends Controller
         $division = $stock->division->label;
 
         $pdf = PDF::loadView('pdf.ItemsByStock', compact('data', 'header', 'division'));
+
+        return $pdf->stream('items.pdf');
+    }
+
+    public function cetakpdf(Request $request) //untuk cetak item non-asset
+    {
+        $data = Item::where('stock_id', $request->stock_id)->get();
+        $stock = \App\Models\Stock::find($request->stock_id);
+        $header = $stock->type == 'non-asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
+        $header .= ' : ' . $stock->name;
+        $division = $stock->division->label;
+
+        $pdf = PDF::loadView('pdf.CetakByStock', compact('data', 'header', 'division'));
 
         return $pdf->stream('items.pdf');
     }

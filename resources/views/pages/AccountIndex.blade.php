@@ -22,7 +22,7 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Nama', 'Role', 'Email', 'Username', 'Aksi']">
+                        <x-table :thead="['Nama', 'Jabatan', 'Role', 'Email', 'Username', 'Aksi']">
                             @foreach($data as $row)
                                 @php
                                     $role = '';
@@ -34,6 +34,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->name }}</td>
+                                    <td>{{ $row->position }}</td>
                                     <td>{{ $role }}</td>
                                     <td>{{ $row->email }}</td>
                                     <td>{{ $row->username }}</td>
@@ -87,6 +88,12 @@
                     :placeholder="'Masukkan Nama'"
                     :col="6"
                     :name="'name'"
+                    :required="true"></x-in-text>
+                <x-in-text
+                    :label="'Jabatan'"
+                    :placeholder="'Masukkan Jabatan'"
+                    :col="6"
+                    :name="'position'"
                     :required="true"></x-in-text>
                 <x-in-text
                     :label="'Email'"
