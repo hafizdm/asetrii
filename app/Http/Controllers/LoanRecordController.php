@@ -88,4 +88,16 @@ class LoanRecordController extends Controller
 
         return redirect()->back()->with('message', 'Data berhasil disimpan');
     }
+
+    public function cetakTanggal()
+    {
+        return view('pdf.CetakPertanggalIn');
+    }
+
+    public function cetakMasuk($tglawal, $tglakhir)
+    {
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+        $data = LoanRecord::with('item_id')->whereBetween('created', [$tglawal, $tglakhir])->get();
+        return view('pdf.CetakInPertanggalIndex', compact('data'));
+    }
 }

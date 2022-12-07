@@ -57,6 +57,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-in', [LoanRecordController::class, 'recordIn'])->name('record-in.index');
     Route::post('record-in', [LoanRecordController::class, 'storeRecordIn'])->name('record-in.store');
 
+    //Cetak Pertanggal Barang masuk asset
+    Route::get('record-in-pdf', [LoanRecordController::class, 'cetakTanggal'])->name('record-in.exports');
+    Route::get('record-in-pertanggal/{tglawal}/{tglakhir}', [LoanRecordController::class, 'cetakMasuk'])->name('record-in-pertanggal.exports');
+
+
+
     Route::get('record-out', [LoanRecordController::class, 'recordOut'])->name('record-out.index');
     Route::post('record-out', [LoanRecordController::class, 'storeRecordOut'])->name('record-out.store');
 
