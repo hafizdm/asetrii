@@ -119,14 +119,6 @@
                         </td>
                     </tr>
                     @endforeach
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span class="badge badge-success">Shipped</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -161,25 +153,17 @@
                 <tbody>
                     @foreach ($nonAssets as $x)
                         <tr>
-                            <td>{{ $x->created }}</td>
+                            <td>{{ $x->moved_at }}</td>
                             <td>{{ $x->item->kind->label }}</td>
                             <td>{{ $x->item->merk->label }}</td>
                             <td>{{ $x->item->name }}</td>
-                            <td>{{ $x->amount }}</td>
+                            <td>{{ (int) $x->amount }}</td>
                             <td>{{ $x->item->stock->responsible->name }}</td>
                             <td>
                                 <td><span class="badge badge-{{ $x->item->status == true ? 'success' : 'danger' }}">{{ $x->item->status == true ? 'Masuk' : 'Keluar'  }}</span></td>
                             </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span class="badge badge-success">Shipped</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

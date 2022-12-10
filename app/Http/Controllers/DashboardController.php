@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        $assets = LoanRecord:://with('item', 'item.kind', 'item.merk', 'item.stock.responsible')
-            latest('created')
+        $assets = LoanRecord::latest('created')
             ->limit(5)
             ->get();
 
