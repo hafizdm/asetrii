@@ -32,6 +32,11 @@ class Item extends Model
         return $this->hasMany(LoanRecord::class);
     }
 
+    public function stock()
+    {
+        return $this->belongsTo(Stock::class);
+    }
+
     public function stockLog()
     {
         return $this->hasMany(StockLog::class);
