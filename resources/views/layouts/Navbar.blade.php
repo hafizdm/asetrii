@@ -1,6 +1,7 @@
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-    <div class="container">
+  {{-- <nav class="main-header navbar navbar-expand-md navbar-light navbar-white"> --}}
+  <nav class="main-header navbar navbar-expand navbar-light navbar-white">
+    {{-- <div class="container"> --}}
       {{-- <a href="#" class="navbar-brand">
         <img src="{{ asset('assets') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">{{ env('APP_NAME') }}</span>
@@ -10,7 +11,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+      {{-- <div class="collapse navbar-collapse order-3" id="navbarCollapse"> --}}
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -23,11 +24,11 @@
             {{-- <a href="{{ route('classroom.my-classroom') }}" class="nav-link">Kelasku</a> --}}
           </li>
         </ul>
-
-      </div>
+      {{-- </div> --}}
 
       <!-- Right navbar links -->
-      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+      {{-- <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto"> --}}
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" id="toggle-dark-mode" href="#" role="button">
             <i class="fas fa-moon"></i>
@@ -43,6 +44,6 @@
         </li>
 
       </ul>
-    </div>
+    {{-- </div> --}}
   </nav>
   <!-- /.navbar -->
