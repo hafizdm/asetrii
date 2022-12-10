@@ -94,10 +94,22 @@ class LoanRecordController extends Controller
         return view('pdf.CetakPertanggalIn');
     }
 
-    public function cetakMasuk($tglawal, $tglakhir)
+    public function cetakMasuk(Request $request)
     {
-        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
-        $data = LoanRecord::with('item_id')->whereBetween('created', [$tglawal, $tglakhir])->get();
+        $req = $request->validate([
+            'tglawal' => [
+                'required',
+                'date',
+                'before_or_equal:tglakhir',
+            ],
+            'tglakhir' => [
+                'required',
+                'date',
+                'after_or_equal:tglawal',
+            ],
+        ]);
+
+        $data = LoanRecord::with('item_id')->whereBetween('created', [$req['tglawal'], $req['tglakhir']])->get();
         return view('pdf.CetakInPertanggalIndex', compact('data'));
     }
 }

@@ -54,8 +54,8 @@
     <p>{{ $header }}</p>
     <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p> --}}
 
-    
-    <table class="data">    
+
+    <table class="data">
         <thead>
             <tr>
                 <th>Tanggal</th>
