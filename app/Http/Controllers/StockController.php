@@ -41,12 +41,11 @@ class StockController extends Controller
 
         $data = [];
         if ($request->type) {
-            
                 $user = auth()->user();
                 if ($user->role == 'admin') {
                     $data = Stock::where('type', $request->type)
                     ->where('user_id', $user->id)
-                    ->paginate(15)        
+                    ->paginate(15)
                     ->withQueryString();
                 } else if ($user->role == 'director') {
                     $data = Stock::where('type', $request->type)
@@ -73,7 +72,7 @@ class StockController extends Controller
                 if ($user->role == 'admin') {
                     $data = Stock::where('type', $request->type)
                     ->where('user_id', $user->id)
-                    ->paginate(15)        
+                    ->paginate(15)
                     ->withQueryString();
                 } else if ($user->role == 'director') {
                     $data = Stock::where('type', $request->type)
@@ -89,7 +88,7 @@ class StockController extends Controller
 
     public function show($id)
     {
-        // 
+        //
     }
 
     public function store(Request $request)
