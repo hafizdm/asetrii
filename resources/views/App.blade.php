@@ -25,7 +25,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Addtional CSS -->
   @stack('css')
 </head>
-<body class="hold-transition sidebar-collapse layout-top-nav">
+{{-- <body class="hold-transition sidebar-collapse layout-top-nav"> --}}
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   @include('layouts.Navbar')
@@ -36,7 +37,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container">
+      {{-- <div class="container"> --}}
+      <div class="container-fluid">
         <x-row class="mb-2">
           <x-col :col="6">
             <h1 class="m-0">@yield('content-header', 'Header Menu')</h1>
@@ -51,7 +53,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
-      <div class="container">
+      {{-- <div class="container"> --}}
+      <div class="container-fluid">
         @yield('content')
       </div><!-- /.container-fluid -->
     </div>
