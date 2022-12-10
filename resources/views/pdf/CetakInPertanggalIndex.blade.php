@@ -69,7 +69,7 @@
         <tbody>
             @foreach ($data as $row)
                 <tr>
-                    <td scope="row">{{ $index + $data->firstItem() }}</td>
+                    <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
                     <td>{{ $row->item->kind->name }}</td>
                     <td>{{ $row->item->merk->name }}</td>

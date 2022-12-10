@@ -109,7 +109,8 @@ class LoanRecordController extends Controller
             ],
         ]);
 
-        $data = LoanRecord::with('item_id')->whereBetween('created', [$req['tglawal'], $req['tglakhir']])->get();
+        $data = LoanRecord::with('item')->whereBetween('created', [$req['tglawal'], $req['tglakhir']])->
+        where('user_id', auth()->user()->id)->get();
         return view('pdf.CetakInPertanggalIndex', compact('data'));
     }
 }
