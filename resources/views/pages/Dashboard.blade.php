@@ -114,9 +114,7 @@
                         <td>{{ $x->item->name }}</td>
                         <td>{{ $x->item->code }}</td>
                         <td>{{ $x->item->stock->responsible->name }}</td>
-                        <td>
-                            <td><span class="badge badge-{{ $x->item->status == true ? 'success' : 'danger' }}">{{ $x->item->status == true ? 'Masuk' : 'Keluar'  }}</span></td>
-                        </td>
+                        <td><span class="badge badge-{{ $x->item->status == true ? 'success' : 'danger' }}">{{ $x->item->status == true ? 'Masuk' : 'Keluar'  }}</span></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -137,7 +135,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
-        <div class="table-responsive">
+        success    <div class="table-responsive">
             <table class="table m-0">
                 <thead>
                     <tr>
@@ -159,9 +157,7 @@
                             <td>{{ $x->item->name }}</td>
                             <td>{{ (int) $x->amount }}</td>
                             <td>{{ $x->item->stock->responsible->name }}</td>
-                            <td>
-                                <td><span class="badge badge-{{ $x->type == 'in' ? 'success' : 'danger' }}">{{  $x->type == 'in' ? 'success' : 'danger'  }}</span></td>
-                            </td>
+                            <td><span class="badge badge-{{ $x->type == 'in' ? 'success' : 'danger' }}">{{  $x->type == 'in' ? 'Masuk' : 'Keluar'  }}</span></td>
                         </tr>
                     @endforeach
                 </tbody>
