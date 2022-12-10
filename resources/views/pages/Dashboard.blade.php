@@ -160,7 +160,7 @@
                             <td>{{ (int) $x->amount }}</td>
                             <td>{{ $x->item->stock->responsible->name }}</td>
                             <td>
-                                <td><span class="badge badge-{{ $x->item->status == true ? 'success' : 'danger' }}">{{ $x->item->status == true ? 'Masuk' : 'Keluar'  }}</span></td>
+                                <td><span class="badge badge-{{ $x->type == 'in' ? 'success' : 'danger' }}">{{  $x->type == 'in' ? 'success' : 'danger'  }}</span></td>
                             </td>
                         </tr>
                     @endforeach
