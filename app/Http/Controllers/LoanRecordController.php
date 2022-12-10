@@ -91,7 +91,7 @@ class LoanRecordController extends Controller
 
     public function cetakTanggal()
     {
-        return view('pdf.CetakPertanggalIn');
+        return view('pdf.CetakPertanggalIn');   
     }
 
     public function cetakMasuk(Request $request)
@@ -114,7 +114,11 @@ class LoanRecordController extends Controller
             ->whereHas('item.stock.responsible', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
+
+            ->where('is_in', true)
             ->get();
+
+      
 
         return view('pdf.CetakInPertanggalIndex', compact('data'));
     }
