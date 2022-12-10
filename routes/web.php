@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //Cetak Pertanggal Barang masuk asset
     Route::get('record-in-pdf', [LoanRecordController::class, 'cetakTanggal'])->name('record-in.exports');
-    Route::get('record-in-pertanggal/{tglawal}/{tglakhir}', [LoanRecordController::class, 'cetakMasuk'])->name('record-in-pertanggal.exports');
+    Route::get('record-in-pertanggal', [LoanRecordController::class, 'cetakMasuk'])->name('record-in-pertanggal.exports');
 
 
 
