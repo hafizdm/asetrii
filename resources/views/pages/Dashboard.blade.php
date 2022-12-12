@@ -135,7 +135,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
-        success    <div class="table-responsive">
+         <div class="table-responsive">
             <table class="table m-0">
                 <thead>
                     <tr>

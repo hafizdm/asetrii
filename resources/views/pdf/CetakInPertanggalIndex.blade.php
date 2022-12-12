@@ -58,6 +58,7 @@
     <table class="data">
         <thead>
             <tr>
+                <th>No</th>
                 <th>Tanggal</th>
                 <th>Jenis Barang</th>
                 <th>Merk</th>

@@ -1,6 +1,13 @@
 @extends('App')
 
-@section('content-header', 'Stock Masuk')
+@php
+    $stockCategoryId = app('request')->input('stock_id');
+
+    $stockCategory = \App\Models\Stock::find($stockCategoryId);
+@endphp
+
+@section('content-header', 'Stock Masuk Asset Tidak Tetap:' . $stockCategory->name)
+
 
 @section('content')
     {{-- {{ dd(App\Models\Item::all()) }} --}}

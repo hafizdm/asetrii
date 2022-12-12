@@ -47,41 +47,47 @@
     </style>
 </head>
 <body>
-    <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG ASSET TETAP</h3>
+        <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
+    <h3>DATA BARANG ASSET</h3>
 
-    <p>Nama Departemen : {{ $division }}</p>
+    {{-- <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>
-    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p>
+    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p> --}}
 
-    
+
     <table class="data">
         <thead>
             <tr>
-                <th>Kode</th>
-                <th>Jenis</th>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Jenis Barang</th>
                 <th>Merk</th>
                 <th>Nama Barang</th>
-                <th>Satuan</th>
-                <th>Status</th>
+                <th>Kode Barang</th>
+                <th>Penerima</th>
+                <th>Jabaran</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $row)
                 <tr>
-                    <td>{{ $row->code }}</td>
-                    <td>{{ $row->kind->label }}</td>
-                    <td>{{ $row->merk->label }}</td>
-                    <td>{{ $row->name }}</td>
-                    <td>{{ $row->unit->label }}</td>
-                    <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
+                    <td scope="row">{{ $loop->iteration }}</td>
+                    <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
+                    <td>{{ $row->item->kind->name }}</td>
+                    <td>{{ $row->item->merk->name }}</td>
+                    <td>{{ $row->item->name }}</td>
+                    <td>{{ $row->item->code }}</td>
+                    <td>{{ $row->receipt }}</td>
+                    <td>{{ $row->position }}</td>
+                    <td>{{ $row->notes }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <div class="signature-wrapper">
-        <p>Berikut merupakan daftar Asset Tetap tanggal {{ date('d/m/Y') }}</p>
+    {{-- <div class="signature-wrapper">
+        <p>Berikut merupakan daftar Non-Asset tanggal {{ date('d/m/Y') }}</p>
         <table class="signature">
             <tr>
                 <td style="width: 50%; text-align: center;">
@@ -102,7 +108,7 @@
                     <p style="font-style: italic;">({{auth()->user()->position  }})</p>
                 </td>
         </table>
-    </div>
+    </div> --}}
 
     {{-- buat kolom  --}}
 </body>

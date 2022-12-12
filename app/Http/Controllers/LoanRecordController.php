@@ -115,11 +115,45 @@ class LoanRecordController extends Controller
                 $query->where('user_id', auth()->user()->id);
             })
 
-            ->where('is_in', true)
+            ->where('is_in', true) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
             ->get();
 
       
 
         return view('pdf.CetakInPertanggalIndex', compact('data'));
+    }
+
+    public function cetakDate()
+    {
+        return view('pdf.CetakPertanggalOut'); 
+    }
+
+    public function cetakKeluar(Request $request)
+    {
+        $req = $request->validate([
+            'tglawal' => [
+                'required',
+                'date',
+                'before_or_equal:tglakhir',
+            ],
+            'tglakhir' => [
+                'required',
+                'date',
+                'after_or_equal:tglawal',
+            ],
+        ]);
+
+        $data = LoanRecord::with('item')
+            ->whereBetween('created', [$req['tglawal'], $req['tglakhir']])
+            ->whereHas('item.stock.responsible', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+
+            ->where('is_in', false) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
+            ->get();
+
+      
+
+        return view('pdf.CetakOutPertanggalIndex', compact('data'));
     }
 }

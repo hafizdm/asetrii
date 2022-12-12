@@ -1,4 +1,4 @@
-@extends('App')
+{{-- @extends('App')
 
 @section('content-header', 'Stock')
 
@@ -34,4 +34,4 @@
             </x-card-collapsible>
         </x-row>
     </x-content>
-@endsection
+@endsection --}}
