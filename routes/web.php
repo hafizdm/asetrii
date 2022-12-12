@@ -89,6 +89,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-non-asset-out', [StockNonAssetController::class, 'indexOut'])->name('record-non-asset-out.index');
     Route::post('record-non-asset-out', [StockNonAssetController::class, 'storeRecordOut'])->name('record-out-non-asset.index');
 
+    //cetak pertanggal barang masuk non-asset
+    Route::get('record-non-in-pdf', [StockNonAssetController::class, 'cetakTanggal'])->name('record-non-in.exports');
+    Route::get('record-non-in-pertanggal', [StockNonAssetController::class, 'cetakMasuk'])->name('record-non-in-pertanggal.exports');
+
+    //cetak pertanggal barang keluar non-asset
+    Route::get('record-non-out-pdf', [StockNonAssetController::class, 'cetakDate'])->name('record-non-out.exports');
+    Route::get('record-non-out-pertanggal', [StockNonAssetController::class, 'cetakKeluar'])->name('record-non-out-pertanggal.exports');
+
+
     Route::post('accounts', [AccountController::class, 'store'])->name('account.store');
     Route::get('accounts', [AccountController::class, 'index'])->name('account.index');
     Route::delete('accounts/{id}', [AccountController::class, 'destroy'])->name('account.destroy');

@@ -105,5 +105,73 @@ class StockNonAssetController extends Controller
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
+    public function cetakTanggal()
+    {
+        return view('pdf.CetakInNoAssetIndex'); 
+    }
+
+    public function cetakMasuk(Request $request)
+    {
+        $req = $request->validate([
+            'tglawal' => [
+                'required',
+                'date',
+                'before_or_equal:tglakhir',
+            ],
+            'tglakhir' => [
+                'required',
+                'date',
+                'after_or_equal:tglawal',
+            ],
+        ]);
+
+        $data = StockLog::with('item')
+            ->whereBetween('moved_at', [$req['tglawal'], $req['tglakhir']])
+            ->whereHas('item.stock.responsible', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+
+            ->where('type', 'in') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
+            ->get();
+
+      
+
+        return view('pdf.CetakInPertanggalNoAsset', compact('data'));
+    }
+
+    public function cetakDate()
+    {
+        return view('pdf.CetakOutNoAssetIndex');
+    }
+
+    public function cetakKeluar(Request $request)
+    {
+        $req = $request->validate([
+            'tglawal' => [
+                'required',
+                'date',
+                'before_or_equal:tglakhir',
+            ],
+            'tglakhir' => [
+                'required',
+                'date',
+                'after_or_equal:tglawal',
+            ],
+        ]);
+
+        $data = StockLog::with('item')
+            ->whereBetween('moved_at', [$req['tglawal'], $req['tglakhir']])
+            ->whereHas('item.stock.responsible', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+
+            ->where('type', 'out') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
+            ->get();
+
+      
+
+        return view('pdf.CetakOutPertanggalNoAsset', compact('data'));
+    }
+
 
 }

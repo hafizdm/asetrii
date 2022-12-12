@@ -17,6 +17,8 @@
                 <x-row>
                     <x-col class="mb-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+                        <a href="{{ route('record-non-in.exports') }}" class="btn btn-info" title="Cetak"><i class="fas fa-print"></i></a>
+
                     </x-col>
 
                     <x-col>
