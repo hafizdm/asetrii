@@ -9,6 +9,8 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
 
+
+
 <!-- Content Row -->
 <div class="row">
 
@@ -84,7 +86,9 @@
         </div>
     </div>
 </div>
-
+<br>
+<h3> Selamat Datang , di Sistem Management Asset PT. RAPID INFRASTRUKTUR INDONESIA  </h3>
+<br>
 {{-- assets update --}}
 <div class="card">
     <div class="card-header border-transparent">

@@ -36,6 +36,9 @@
                                     <td>{{ $row->item->code }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
+                                        <input type="file" name="file"><br><br> 
+                                    </td>
+                                    <td>
                                         {{-- <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
