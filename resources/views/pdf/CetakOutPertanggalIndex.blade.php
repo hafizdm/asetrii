@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Document Aset Keluar</title>
 
     <style>
         body {
@@ -16,8 +16,9 @@
             margin-top: 20px;
         }
         th, td {
-            text-align: left;
+            text-align: center;
             padding: 8px;
+            font-size: 10px;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
@@ -31,6 +32,7 @@
         }
         p {
             margin: 1;
+            font-size: 12px;
         }
         .logo {
             max-width: 25%;
@@ -48,11 +50,11 @@
 </head>
 <body>
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG ASSET</h3>
+    <h3>DATA BARANG ASSET KELUAR</h3>
 
     {{-- <p>Nama Departemen : {{ $division }}</p>
-    <p>{{ $header }}</p>
-    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p> --}}
+    <p>{{ $header }}</p> --}}
+    <p>Dicetak Tanggal: {{ date('d M Y') }} </p>
 
 
     <table class="data">
@@ -65,7 +67,7 @@
                 <th>Nama Barang</th>
                 <th>Kode Barang</th>
                 <th>Penerima</th>
-                <th>Jabaran</th>
+                <th>Jabatan</th>
                 <th>Keterangan</th>
             </tr>
         </thead>
@@ -86,7 +88,7 @@
         </tbody>
     </table>
 
-    {{-- <div class="signature-wrapper">
+    <div class="signature-wrapper">
         <p>Berikut merupakan daftar Non-Asset tanggal {{ date('d/m/Y') }}</p>
         <table class="signature">
             <tr>
@@ -108,7 +110,7 @@
                     <p style="font-style: italic;">({{auth()->user()->position  }})</p>
                 </td>
         </table>
-    </div> --}}
+    </div> 
 
     {{-- buat kolom  --}}
 </body>

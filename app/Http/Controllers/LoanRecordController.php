@@ -8,6 +8,8 @@ use App\Models\Item;
 use App\Models\StockLog;
 use Illuminate\Http\Request;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class LoanRecordController extends Controller
 {
     public function recordIn(Request $request)
@@ -118,9 +120,9 @@ class LoanRecordController extends Controller
             ->where('is_in', true) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
             ->get();
 
-      
-
-        return view('pdf.CetakInPertanggalIndex', compact('data'));
+            $pdf = PDF::loadview('pdf.CetakInPertanggalIndex', compact('data'));
+    
+            return $pdf->stream('item.pdf');       
     }
 
     public function cetakDate()
@@ -152,8 +154,9 @@ class LoanRecordController extends Controller
             ->where('is_in', false) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
             ->get();
 
-      
 
-        return view('pdf.CetakOutPertanggalIndex', compact('data'));
+            $pdf = PDF::loadview('pdf.CetakOutPertanggalIndex', compact('data'));
+    
+            return $pdf->stream('item.pdf');            
     }
 }

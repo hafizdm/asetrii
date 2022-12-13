@@ -112,7 +112,7 @@
                 <tbody>
                     @foreach ($assets as $x)
                     <tr>
-                        <td>{{ $x->created }}</td>
+                        <td>{{ \Carbon\Carbon::parse($x->created_at)->format('d M Y') }}</td>
                         <td>{{ $x->item->kind->label }}</td>
                         <td>{{ $x->item->merk->label }}</td>
                         <td>{{ $x->item->name }}</td>
@@ -155,7 +155,7 @@
                 <tbody>
                     @foreach ($nonAssets as $x)
                         <tr>
-                            <td>{{ $x->moved_at }}</td>
+                            <td>{{ \Carbon\Carbon::parse($x->moved_at)->format('d M Y') }}</td>
                             <td>{{ $x->item->kind->label }}</td>
                             <td>{{ $x->item->merk->label }}</td>
                             <td>{{ $x->item->name }}</td>

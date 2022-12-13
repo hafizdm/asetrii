@@ -8,6 +8,9 @@ use App\Models\StockLog;
 use DateTime;
 use Illuminate\Http\Request;
 
+
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class StockNonAssetController extends Controller
 {
     public function indexIn(Request $request)
@@ -134,9 +137,11 @@ class StockNonAssetController extends Controller
             ->where('type', 'in') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
             ->get();
 
+            $pdf = PDF::loadview('pdf.CetakInPertanggalNoAsset', compact('data'));
       
 
-        return view('pdf.CetakInPertanggalNoAsset', compact('data'));
+        return $pdf->stream('item.pdf');
+
     }
 
     public function cetakDate()
@@ -167,10 +172,11 @@ class StockNonAssetController extends Controller
 
             ->where('type', 'out') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
             ->get();
-
+        
+        $pdf = PDF::loadview('pdf.CetakOutPertanggalNoAsset', compact('data'));
       
 
-        return view('pdf.CetakOutPertanggalNoAsset', compact('data'));
+        return $pdf->stream('item.pdf');
     }
 
 

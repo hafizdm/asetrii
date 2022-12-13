@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
      <a href="#" class="brand-link">
       <img src="{{ asset('assets') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ env('APP_NAME') }}</span>
+      <span class="brand-text font-weight-light">RAPID</span>
     </a>
 
     <!-- Sidebar -->
@@ -14,7 +14,11 @@
           <img src="{{ asset('assets') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->person->name ?? "" }}</a>
+          <span class="hidden-xs">{{Auth::user()->name}}</span>
+          <br>
+          <span class="hidden-xs">{{Auth::user()->position}}</span>
+        </div>
+        <div>
         </div>
       </div>
 
@@ -54,6 +58,8 @@
               <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="route('record-non-asset-out.index', ['type' => 'non-asset'])" />
           @endif
         </ul>
+
+        
       </nav>
       <!-- /.sidebar-menu -->
     </div>

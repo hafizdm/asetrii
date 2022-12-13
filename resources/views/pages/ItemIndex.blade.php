@@ -15,7 +15,9 @@
             <x-card-collapsible>
                 <x-row>
                     <x-col class="mb-3">
+                    @if(Auth::user()->role == 'admin')
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+                    @endif
 
                     @if($stock->type == 'asset')
                         <a href="{{ route('item.exports') . '?stock_id=' .  $stockId }}" target="_blank" class="btn btn-info">Export PDF</a>
@@ -50,6 +52,8 @@
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->unit->label }}</td>
                                         <td>{{ $row->status == 1 ? "Tersedia" : "Tidak tersedia" }}</td>
+                                        
+                                        @if(Auth::user()->role == 'admin')
                                         <td>
                                             <a
                                                 href="{{ route('item.update', $row->id) }}"
@@ -67,6 +71,8 @@
                                                     title="Hapus"><i class="fas fa-trash-alt"></i></button>
                                             </form>
                                         </td>
+                                        @endif
+
                                     </tr>
                                 @endforeach
                             </x-table>

@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: DejaVu Sans;
+            font-size: 12px;
         }
         table {
             border-collapse: collapse;
@@ -17,6 +18,7 @@
         }
         th, td {
             text-align: left;
+            text-align: center;
             padding: 8px;
         }
         tr:nth-child(even) {
@@ -38,10 +40,10 @@
         }
         .signature-wrapper {
 
-            text-align: right;
-            margin-right: 0;
+            text-align: center;
+            margin-right: 5px;
             margin-top: 25px;
-            font-size: 0.8em;
+            font-size: 1em;
         }
 
     </style>
@@ -52,7 +54,7 @@
 
     <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>
-    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p>
+    <p>Dicetak Tanggal : {{ date('d M Y') }} </p>
 
     
     <table class="data">
@@ -81,7 +83,7 @@
     </table>
 
     <div class="signature-wrapper">
-        <p>Berikut merupakan daftar Asset Tetap tanggal {{ date('d/m/Y') }}</p>
+        <p>Berikut merupakan {{ $header }} tanggal {{ date('d/m/Y') }}</p>
         <table class="signature">
             <tr>
                 <td style="width: 50%; text-align: center;">

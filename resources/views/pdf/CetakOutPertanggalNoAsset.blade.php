@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: DejaVu Sans;
+            
         }
         table {
             border-collapse: collapse;
@@ -16,11 +17,13 @@
             margin-top: 20px;
         }
         th, td {
-            text-align: left;
+            text-align: center;
             padding: 8px;
+            font-size: 10px;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
+            font-size: 12px;
         }
         th {
             background-color: #949994;
@@ -48,7 +51,7 @@
 </head>
 <body>
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG NON ASSET</h3>
+    <h3>DATA BARANG KELUAR NON ASSET</h3>
 
     {{-- <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>
