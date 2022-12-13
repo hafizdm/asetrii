@@ -105,6 +105,7 @@
                         <th>Merk</th>
                         <th>Nama barang</th>
                         <th>Kode Barang</th>
+                        <th>Nama Stock</th>
                         <th>Responsible</th>
                         <th>Status</th>
                     </tr>
@@ -117,6 +118,7 @@
                         <td>{{ $x->item->merk->label }}</td>
                         <td>{{ $x->item->name }}</td>
                         <td>{{ $x->item->code }}</td>
+                        <td>{{ $x->item->stock->name}}</td>
                         <td>{{ $x->item->stock->responsible->name }}</td>
                         <td><span class="badge badge-{{ $x->item->status == true ? 'success' : 'danger' }}">{{ $x->item->status == true ? 'Masuk' : 'Keluar'  }}</span></td>
                     </tr>
@@ -148,6 +150,7 @@
                         <th>Merk</th>
                         <th>Nama barang</th>
                         <th>Jumlah</th>
+                        <th>Nama Stock</th>
                         <th>Responsible</th>
                         <th>Status</th>
                     </tr>
@@ -160,6 +163,7 @@
                             <td>{{ $x->item->merk->label }}</td>
                             <td>{{ $x->item->name }}</td>
                             <td>{{ (int) $x->amount }}</td>
+                            <td>{{ $x->item->stock->name }}</td>
                             <td>{{ $x->item->stock->responsible->name }}</td>
                             <td><span class="badge badge-{{ $x->type == 'in' ? 'success' : 'danger' }}">{{  $x->type == 'in' ? 'Masuk' : 'Keluar'  }}</span></td>
                         </tr>

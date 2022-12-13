@@ -46,9 +46,9 @@
                     <x-col>
                         @if($categoryGroup == 'merks')
                             <x-table :thead="['Jenis', 'Nama', 'Catatan', 'Aksi']">
-                                @foreach($data as $row)
+                                @foreach($data as $index => $row)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td scope="row">{{ $index + $data->firstItem() }}</td>
                                         <td>{{ $row->parent->label }}</td>
                                         <td>{{ $row->label }}</td>
                                         <td>{{ $row->notes }}</td>
@@ -74,9 +74,9 @@
                             </x-table>
                         @else
                             <x-table :thead="['Nama', 'Catatan', 'Aksi']">
-                                @foreach($data as $row)
+                                @foreach($data as $index => $row)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td scope="row">{{ $index + $data->firstItem() }}</td>
                                         <td>{{ $row->label }}</td>
                                         <td>{{ $row->notes }}</td>
                                         <td>

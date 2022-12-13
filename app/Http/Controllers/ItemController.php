@@ -25,7 +25,7 @@ class ItemController extends Controller
             return redirect()->back()->withErrors(['msg' => 'item dengan stock tersebut tidak ditemukan']);
 
         $data = Item::where('stock_id', $request->stock_id)
-            ->paginate(5)
+            ->paginate(10)
             ->withQueryString();
 
         return view('pages.ItemIndex', compact('data'));

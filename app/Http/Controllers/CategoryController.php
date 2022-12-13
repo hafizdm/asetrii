@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $data = [];
         if ($request->category) {
             $data = Category::where('group_by', $request->category)
-                            ->paginate(15)
+                            ->paginate(10)
                             ->withQueryString();
         } else {
             return redirect()->back()->withErrors('Kategori tidak ditemukan.');
