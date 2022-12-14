@@ -20,8 +20,8 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Kategori</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Asset</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $item}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-list fa-2x text-gray-300"></i>
@@ -37,8 +37,8 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Asset</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Asset Masuk</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $loanIn}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-tag fa-2x text-gray-300"></i>
@@ -54,10 +54,10 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Non-asset</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Asset Keluar</div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">200</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $loanOut }}</div>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jumlah User</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $user }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user fa-2x text-gray-300"></i>
