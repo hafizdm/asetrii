@@ -14,9 +14,7 @@ class LoanRecordController extends Controller
 {
     public function recordIn(Request $request)
     {
-        if ($request->has('search')){
-            $data = LoanRecord::where('name', 'like', '%' . request('search') . '%')->paginate(5);
-        }
+        
 
         $stockId = $request->input('stock_id');
         $stock = Stock::find($stockId);
@@ -25,7 +23,23 @@ class LoanRecordController extends Controller
 
         if ($stock->type == 'asset') {
             $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
-            ->select('loan_records.*')
+            ->select('loan_records.*');
+            if ($request->search){
+                $data = $data 
+                ->where(function($query) use($request){
+                    $query->where('created', $request->search)
+                          ->orWhereHas('item', function($q) use($request){
+                            $q->where('name', 'like',"%{$request->search}%");
+                          })
+                          ->orWhereHas('item.kind', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                          })
+                          ->orWhereHas('item.merk', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                          });
+                });
+            }
+        $data = $data
             ->where('items.stock_id', $stockId)
             ->where('loan_records.is_in', true)
             ->paginate(5)->withQueryString();
@@ -150,12 +164,19 @@ class LoanRecordController extends Controller
             ->whereHas('item.stock.responsible', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
-
+            ->whereHas('item', function ($query) use($request){
+                $query->where('stock_id', $request->stock_id);
+            })
             ->where('is_in', false) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
             ->get();
 
-
-            $pdf = PDF::loadview('pdf.CetakOutPertanggalIndex', compact('data'));
+            // dd($request->all());
+            $stock = \App\Models\Stock::find($request->stock_id);
+            $header = $stock->type == 'non-asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
+            $header .= ' : ' . $stock->name;
+            $division = $stock->division->label;
+    
+            $pdf = PDF::loadview('pdf.CetakOutPertanggalIndex', compact('data', 'header', 'division'));
     
             return $pdf->stream('item.pdf');            
     }

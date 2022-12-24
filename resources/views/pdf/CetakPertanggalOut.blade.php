@@ -14,7 +14,8 @@
                             @csrf
                             <div class="car-body">
                                 <h1 class="mb-5">CETAK PERTANGGAL</h1>
-                                <div class="input-group mb-3">
+                                <input type="hidden" name="stock_id" value="{{ app('request')->stock_id }}">
+                                <div class="input-group mb-3">  
 
                                     <label for="label">Tanggal Awal</label>
                                     <input type="date" name="tglawal" id="tglawal" class="form-control" />

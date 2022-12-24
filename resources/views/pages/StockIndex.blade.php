@@ -26,7 +26,7 @@
                                             class="btn btn-primary"
                                             title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
                                         <a
-                                            href="{{ route('stock.show', $row->id) }}"
+                                            href="{{ route('stock.edit', ['id' => $row->id]) }}"
                                             class="btn btn-warning"
                                             title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 

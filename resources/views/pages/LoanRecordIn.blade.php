@@ -17,8 +17,9 @@
                     <div class="row g-3 align-items-center mb-3">
                         
                         <div class="col-auto">
-                        <form action="pages.ItemIndex" method="GET">
-                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline">
+                        <form action="{{ route('record-in.index')}}" method="GET">
+                        <input type="hidden" name="stock_id" value="{{ app('request')->stock_id }}">
+                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline" value="{{ app('request')->search }}">
                         </form>
                         </div>
                         

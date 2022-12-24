@@ -52,8 +52,8 @@
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
     <h3>DATA BARANG ASSET KELUAR</h3>
 
-    {{-- <p>Nama Departemen : {{ $division }}</p>
-    <p>{{ $header }}</p> --}}
+    <p>Nama Departemen : {{ $division }}</p>
+    <p>{{ $header }}</p>
     <p>Dicetak Tanggal: {{ date('d M Y') }} </p>
 
 

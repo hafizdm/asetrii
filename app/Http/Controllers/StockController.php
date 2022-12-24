@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -86,9 +87,21 @@ class StockController extends Controller
         return view('pages.StockOutIndex', compact('data'));
     }
 
-    public function show($id)
+    public function update(Request $request)
     {
-        //
+        // dd($request->all());
+        Stock::findOrFail($request->id)
+        ->update(['name'=>$request->name, 'division_id'=>$request->division_id, 'location'=>$request->location]);
+
+        return redirect()->route('stock.index', ['type'=>'asset']);
+    }
+
+    public function edit(Request $request)
+    {
+        $data = Stock::findOrFail($request->id);
+        $divisions = Category::where('group_by', 'divisions')->get();
+        
+        return view('pages.StockEdit', compact('data', 'divisions'));
     }
 
     public function store(Request $request)
