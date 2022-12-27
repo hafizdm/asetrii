@@ -21,6 +21,7 @@ class StockNonAssetController extends Controller
 
         $data = [];
         $user = auth()->user();
+        
 
         if ($request->type) {
             if ($user->role == 'admin') {
@@ -66,6 +67,7 @@ class StockNonAssetController extends Controller
 
         return view('pages.StockOutIndex', compact('data'));
     }
+    
 
 
     public function store(Request $request)

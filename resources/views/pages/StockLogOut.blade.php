@@ -21,6 +21,17 @@
 
                     </x-col>
 
+                    <div class="row g-3 align-items-center mb-3">
+                        
+                        <div class="col-auto">
+                        <form action="{{ route('record-in.index')}}" method="GET">
+                        <input type="hidden" name="stock_id" value="{{ app('request')->stock_id }}">
+                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline" value="{{ app('request')->search }}">
+                        </form>
+                        </div>
+                        
+                    </div>
+
                     <x-col>
                         <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Jumlah', 'Ukuran', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
                             @foreach($data as $row)

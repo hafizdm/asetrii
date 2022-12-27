@@ -52,7 +52,7 @@
 </head>
 <body>
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG KELUAR NON ASSET</h3>
+    <h3>DATA KELUAR INVENTORY</h3>
 
     <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>

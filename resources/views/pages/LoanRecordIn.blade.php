@@ -23,7 +23,7 @@
                         </form>
                         </div>
                         
-                      </div>
+                    </div>
 
                     <x-col>
                         <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">

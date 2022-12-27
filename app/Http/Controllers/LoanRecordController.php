@@ -66,10 +66,26 @@ class LoanRecordController extends Controller
 
         if ($stock->type == 'asset') {
             $data = LoanRecord::leftJoin('items', 'items.id', '=', 'loan_records.item_id')
-                                ->select('loan_records.*')
-                                ->where('items.stock_id', $stockId)
-                                ->where('loan_records.is_in', false)
-                                ->paginate(5)->withQueryString();
+            ->select('loan_records.*');
+            if ($request->search){
+                $data = $data 
+                ->where(function($query) use($request){
+                    $query->where('created', $request->search)
+                          ->orWhereHas('item', function($q) use($request){
+                            $q->where('name', 'like',"%{$request->search}%");
+                          })
+                          ->orWhereHas('item.kind', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                          })
+                          ->orWhereHas('item.merk', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                          });
+                });
+            }
+            $data = $data
+            ->where('items.stock_id', $stockId)
+            ->where('loan_records.is_in', false)
+            ->paginate(5)->withQueryString();
 
             return view('pages.LoanRecordOut', compact('data'));
         } else {

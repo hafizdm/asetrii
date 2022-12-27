@@ -29,15 +29,7 @@
 
                     </x-col>
 
-                    <div class="row g-3 align-items-center mb-3">
 
-                        <div class="col-auto">
-                        <form action="pages.ItemIndex" method="GET">
-                          <input type="search" id="inputPassword6" name="search" class="form-control" aria-describedby="passwordHelpInline">
-                        </form>
-                        </div>
-
-                    </div>
 
                     {{-- Index View untuk asset --}}
                     @if($stock->type == 'asset')
