@@ -130,13 +130,20 @@ class LoanRecordController extends Controller
             ->whereHas('item.stock.responsible', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
-
+            ->whereHas('item', function ($query) use($request){
+                    $query->where('stock_id', $request->stock_id);
+            })
             ->where('is_in', true) //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock asset
             ->get();
 
-            $pdf = PDF::loadview('pdf.CetakInPertanggalIndex', compact('data'));
+            $stock = \App\Models\Stock::find($request->stock_id);
+            $header = $stock->type == 'asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
+            $header .= ' : ' . $stock->name;
+            $division = $stock->division->label;
+
+            $pdf = PDF::loadview('pdf.CetakInPertanggalIndex', compact('data', 'header', 'division'));
     
-            return $pdf->stream('item.pdf');       
+            return $pdf->stream('item.pdf');        
     }
 
     public function cetakDate()
@@ -172,7 +179,7 @@ class LoanRecordController extends Controller
 
             // dd($request->all());
             $stock = \App\Models\Stock::find($request->stock_id);
-            $header = $stock->type == 'non-asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
+            $header = $stock->type == 'asset' ? 'Daftar Asset' : 'Daftar Non-Asset';
             $header .= ' : ' . $stock->name;
             $division = $stock->division->label;
     

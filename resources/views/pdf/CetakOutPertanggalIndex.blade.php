@@ -88,8 +88,7 @@
         </tbody>
     </table>
 
-    <div class="signature-wrapper">
-        <p>Berikut merupakan daftar Non-Asset tanggal {{ date('d/m/Y') }}</p>
+    <div class="signature-wrapper">  
         <table class="signature">
             <tr>
                 <td style="width: 50%; text-align: center;">

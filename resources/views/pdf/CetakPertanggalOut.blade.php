@@ -13,7 +13,7 @@
                         <form action="/record-out-pertanggal" method="GET" target="_blank">
                             @csrf
                             <div class="car-body">
-                                <h1 class="mb-5">CETAK PERTANGGAL</h1>
+                                <h1 class="mb-5">CETAK KELUAR PERTANGGAL</h1>
                                 <input type="hidden" name="stock_id" value="{{ app('request')->stock_id }}">
                                 <div class="input-group mb-3">  
 

@@ -16,7 +16,7 @@
             margin-top: 20px;
         }
         th, td {
-            text-align: left;
+            text-align: center;
             padding: 8px;
             font-size: 10px;
         }
@@ -32,6 +32,7 @@
         }
         p {
             margin: 1;
+            font-size: 12px;    
         }
         .logo {
             max-width: 25%;
@@ -49,11 +50,11 @@
 </head>
 <body>
         <img src="{{ public_path('assets/dist/img/rapid-logo.png') }}" alt="logo" class="logo">
-    <h3>DATA BARANG NON ASSET</h3>
+    <h3>DATA BARANG MASUK ASSET</h3>
 
-    {{-- <p>Nama Departemen : {{ $division }}</p>
+    <p>Nama Departemen : {{ $division }}</p>
     <p>{{ $header }}</p>
-    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p> --}}
+    <p>Dicetak Tanggal: {{ date('d/m/Y') }} </p>
 
 
     <table class="data">
@@ -83,8 +84,8 @@
         </tbody>
     </table>
 
-    {{-- <div class="signature-wrapper">
-        <p>Berikut merupakan daftar Non-Asset tanggal {{ date('d/m/Y') }}</p>
+    <div class="signature-wrapper">
+       
         <table class="signature">
             <tr>
                 <td style="width: 50%; text-align: center;">
@@ -105,7 +106,7 @@
                     <p style="font-style: italic;">({{auth()->user()->position  }})</p>
                 </td>
         </table>
-    </div> --}}
+    </div>
 
     {{-- buat kolom  --}}
 </body>

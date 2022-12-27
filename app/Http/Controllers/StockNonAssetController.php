@@ -133,11 +133,19 @@ class StockNonAssetController extends Controller
             ->whereHas('item.stock.responsible', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
+            ->whereHas('item', function ($query) use($request){
+                $query->where('stock_id', $request->stock_id);
+            })
 
             ->where('type', 'in') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
             ->get();
 
-            $pdf = PDF::loadview('pdf.CetakInPertanggalNoAsset', compact('data'));
+            $stock = \App\Models\Stock::find($request->stock_id);
+            $header = $stock->type == '' ? 'Daftar Asset' : 'Daftar Non-Asset';
+            $header .= ' : ' . $stock->name;
+            $division = $stock->division->label;
+
+            $pdf = PDF::loadview('pdf.CetakInPertanggalNoAsset', compact('data', 'header', 'division'));
       
 
         return $pdf->stream('item.pdf');
@@ -169,11 +177,19 @@ class StockNonAssetController extends Controller
             ->whereHas('item.stock.responsible', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
+            ->whereHas('item', function ($query) use($request){
+                $query->where('stock_id', $request->stock_id);
+            })
 
             ->where('type', 'out') //-> untuk barang masuk stock asset (is.in, false)-> untuk barang keluar stock non-asset
             ->get();
-        
-        $pdf = PDF::loadview('pdf.CetakOutPertanggalNoAsset', compact('data'));
+            
+        $stock = \App\Models\Stock::find($request->stock_id);
+        $header = $stock->type == '#' ? 'Daftar Asset' : 'Daftar Non-Asset';
+        $header .= ' : ' . $stock->name;
+        $division = $stock->division->label;
+            
+        $pdf = PDF::loadview('pdf.CetakOutPertanggalNoAsset', compact('data','header','division'));
       
 
         return $pdf->stream('item.pdf');
