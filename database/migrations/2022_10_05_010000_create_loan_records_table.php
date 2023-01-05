@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->string('receipt')->nullable();
             $table->string('position')->nullable();
+            $table->string('upload_file')->nullable();
             $table->datetime('created');
             $table->timestamps();
             $table->softDeletes();

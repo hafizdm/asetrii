@@ -37,7 +37,7 @@
                                     <td>{{ $row->item->code }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        <input type="file" name="file"><br><br> 
+                                        <input type="file" name="file" > 
                                     </td>
                                     <td>
                                         {{-- <a
