@@ -9,6 +9,7 @@ use App\Models\StockLog;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class LoanRecordController extends Controller
 {
@@ -45,9 +46,26 @@ class LoanRecordController extends Controller
             ->paginate(5)->withQueryString();
 
             return view('pages.LoanRecordIn', compact('data'));
-        } else {
+        } else if($stock->type == 'non-asset') {
             $data = StockLog::leftJoin('items', 'items.id', '=', 'stock_logs.item_id')
-            ->select('stock_logs.*')
+            ->select('stock_logs.*');
+            if($request->search){
+                $data = $data
+                ->where(function($query) use($request){
+                    $query->where('moved_at', $request->search)
+                        ->orWhereHas('item', function($q) use($request){
+                            $q->where('name', 'like',"%{$request->search}%");
+                        })
+                        ->orWhereHas('item.kind', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                        })
+                        ->orWhereHas('item.merk', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                        });  
+                });
+                
+            }
+            $data = $data
             ->where('items.stock_id', $stockId)
             ->where('stock_logs.type', 'in')
             ->paginate(5)->withQueryString();
@@ -88,12 +106,30 @@ class LoanRecordController extends Controller
             ->paginate(5)->withQueryString();
 
             return view('pages.LoanRecordOut', compact('data'));
-        } else {
+
+        } else if($stock->type == 'non-asset') {
             $data = StockLog::leftJoin('items', 'items.id', '=', 'stock_logs.item_id')
-                                ->select('stock_logs.*')
-                                ->where('items.stock_id', $stockId)
-                                ->where('stock_logs.type', 'out')
-                                ->paginate(15)->withQueryString();
+            ->select('stock_logs.*');
+            if($request->search){
+                $data = $data
+                ->where(function($query) use($request){
+                    $query->where('moved_at', $request->search)
+                        ->orWhereHas('item', function($q) use($request){
+                            $q->where('name', 'like',"%{$request->search}%");
+                        })
+                        ->orWhereHas('item.kind', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                        })
+                        ->orWhereHas('item.merk', function($q) use($request){
+                            $q->where('label', 'like',"%{$request->search}%");
+                        });  
+                });
+                
+            }
+            $data = $data
+            ->where('items.stock_id', $stockId)
+            ->where('stock_logs.type', 'out')
+            ->paginate(15)->withQueryString();
 
             return view('pages.StockLogOut', compact('data'));
         }
@@ -202,5 +238,33 @@ class LoanRecordController extends Controller
             $pdf = PDF::loadview('pdf.CetakOutPertanggalIndex', compact('data', 'header', 'division'));
     
             return $pdf->stream('item.pdf');            
+    }
+
+    public function upload()
+    {
+        return view('pages.UploadDocumentAsset');
+    }
+
+    public function doUpload(Request $request)
+    {
+        //Untuk memvalidasi request sesuai dengan aturan yang ingin kita inputkan
+        $req = $request->validate([
+            'loan_record_id' => [
+                'required',
+                'exists:loan_records,id',
+            ],
+            
+            'upload_file' => [
+                'required',
+                'file',
+            ],
+        ]);
+        $file=$req['upload_file'];
+        $fileName=$file->getClientOriginalName();
+        $extension=$file->getClientOriginalExtension();
+        $fileName=time().".".$request->upload_file->extension();
+        $request->upload_file->move(public_path('uploads'),$fileName);        
+        
+        return redirect()->back()->with('message', 'Data berhasil disimpan');
     }
 }

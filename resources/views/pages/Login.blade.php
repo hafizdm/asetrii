@@ -1,71 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Asset Management RII | Log in</title>
+  <head>
+  	<title>Login 10</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('assets') }}/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{{ asset('assets') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('assets') }}/dist/css/adminlte.min.css">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="#" class="h1"><b>RAPID</b></a>
-    </div>
-    <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-      <form action="{{ route('auth.login-attempt') }}" method="post">
-        @csrf
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-key"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{{ asset('assets') }}/dist/css/style.css">
 
-    </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
+	</head>
+	<body class="img js-fullheight" style="background-image: url({{ asset('assets') }}/dist/img/login.jpg);">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<img src="{{ asset('assets')}}/dist/img/logo-Rapid.png" alt="">
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Have an account?</h3>
+		      	<form action="{{ route('auth.login-attempt') }}" method="post">
+            @csrf
+		      		<div class="form-group">
+		      			<input type="text" class="form-control" name="username" placeholder="Username" required>
+		      		</div>
+	            <div class="form-group">
+	              <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+	            </div>
+	          </form>
+	          
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-<!-- jQuery -->
-<script src="{{ asset('assets') }}/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('assets') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('assets') }}/dist/js/adminlte.min.js"></script>
-<!-- Workspace Dark Mode -->
-<script src="{{ asset('assets') }}/workspace/adminLte3DarkMode.js"></script>
+	<script src="{{ asset('assets') }}/dist/js/jquery.min.js"></script>
+  <script src="{{ asset('assets') }}/dist/js/popper.js"></script>
+  <script src="{{ asset('assets') }}/dist/js/bootstrap.min.js"></script>
+  <script src="{{ asset('assets') }}/dist/js/main.js"></script>
 
-@include('layouts.Toast')
-</body>
+	</body>
 </html>
+

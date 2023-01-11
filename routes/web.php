@@ -55,7 +55,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('stock-edit', [StockController::class, 'edit'])->name('stock.edit');
     Route::patch('stock-update', [StockController::class, 'update'])->name('stock.update');
 
-    
+    Route::get('upload-doc', [LoanRecordController::class, 'upload'])->name('upload.index');
+    Route::post('upload-doc', [LoanRecordController::class, 'doUpload'])->name('upload.store');
     
 
     Route::get('stock-out', [StockController::class, 'indexOut'])->name('stock.index-out');

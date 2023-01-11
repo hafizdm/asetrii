@@ -37,7 +37,7 @@
                                     <td>{{ $row->item->code }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        <input type="file" name="file" > 
+                                        <a href="{{ route('upload.index', ['loan_record_id' => $row->id]) }}" class="btn btn-primary">Upload</a>
                                     </td>
                                     <td>
                                         {{-- <a
