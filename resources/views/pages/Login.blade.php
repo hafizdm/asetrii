@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Login 10</title>
+  	<title>Login | RII Inventory</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -44,7 +44,7 @@
 		</div>
 	</section>
 
-	<script src="{{ asset('assets') }}/dist/js/jquery.min.js"></script>
+  <script src="{{ asset('assets') }}/dist/js/jquery.min.js"></script>
   <script src="{{ asset('assets') }}/dist/js/popper.js"></script>
   <script src="{{ asset('assets') }}/dist/js/bootstrap.min.js"></script>
   <script src="{{ asset('assets') }}/dist/js/main.js"></script>

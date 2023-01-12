@@ -259,12 +259,22 @@ class LoanRecordController extends Controller
                 'file',
             ],
         ]);
+        
+        $redirect = '/'. $request->redirect_url;
+        
         $file=$req['upload_file'];
         $fileName=$file->getClientOriginalName();
         $extension=$file->getClientOriginalExtension();
         $fileName=time().".".$request->upload_file->extension();
-        $request->upload_file->move(public_path('uploads'),$fileName);        
+        $path = $request->file('upload_file')->storeAs(
+                'public/fileUpload', $fileName
+        );     
         
-        return redirect()->back()->with('message', 'Data berhasil disimpan');
+        
+        $publicPath = str_replace('public','storage', $path);
+        LoanRecord::where('id', $req['loan_record_id'])->update(['upload_file'=>$publicPath]);
+       
+        
+        return redirect($redirect)->with('message', 'Data berhasil disimpan');
     }
 }

@@ -26,6 +26,7 @@
                     </div>
 
                     <x-col>
+                        
                         <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Keterangan', 'Aksi']">
                             @foreach($data as $index => $row)
                                 <tr>
@@ -37,7 +38,11 @@
                                     <td>{{ $row->item->code }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        <a href="{{ route('upload.index', ['loan_record_id' => $row->id]) }}" class="btn btn-primary">Upload</a>
+                                        <a href="{{ route('upload.index', ['loan_record_id' => $row->id, 'redirect_url'=>request()->path().'?stock_id='. app('request')->stock_id]) }}" class="btn btn-primary">Upload</a>
+                                    @if ($row->upload_file)
+                                        <a href="{{ $row->upload_file }}" class="btn btn-primary">View</a>
+                                    @endif
+                                        
                                     </td>
                                     <td>
                                         {{-- <a

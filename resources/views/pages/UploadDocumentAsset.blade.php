@@ -1,6 +1,6 @@
 @extends ('App')
 
-@section('content-header')
+@section('content-header','Upload File')
 
 @section('content')
 <x-content>
@@ -9,6 +9,8 @@
           <form action="{{route('upload.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" value="{{ app('request')->loan_record_id }}" name="loan_record_id">
+            <input type="hidden" value="{{ app('request')->redirect_url }}" name="redirect_url">
+            
             <div class="form-group">
                 <div class="custom-file">
                   <input type="file" class="custom-file-input" id="customFile" name="upload_file">
