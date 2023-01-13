@@ -1,6 +1,13 @@
 @extends('App')
 
-@section('content-header', 'Stock Keluar')
+@php
+    $stockCategoryId = app('request')->input('stock_id');
+
+    $stockCategory = \App\Models\Stock::find($stockCategoryId);
+@endphp
+
+@section('content-header', 'Stock Keluar Asset :' . $stockCategory->name)
+
 
 @section('content')
     {{-- {{ dd(App\Models\Item::all()) }} --}}
@@ -25,7 +32,7 @@
                     </div>
 
                     <x-col>
-                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Aksi']">
+                        <x-table :thead="['Tanggal', 'Jenis', 'Merk', 'Nama Barang', 'Kode Barang', 'Penerima', 'Jabatan', 'Keterangan', 'Upload File']">
                             @foreach($data as $index => $row)
                                 <tr>
                                     <td scope="row">{{ $index + $data->firstItem() }}</td>
@@ -38,7 +45,13 @@
                                     <td>{{ $row->position }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        {{-- <a
+                                        <a href="{{ route('upload.index', ['loan_record_id' => $row->id, 'redirect_url'=>request()->path().'?stock_id='. app('request')->stock_id]) }}" class="btn btn-primary">Upload</a>
+                                    @if ($row->upload_file)
+                                        <a href="{{ $row->upload_file }}" class="btn btn-primary">View</a>
+                                    @endif
+                                    </td>
+                                    {{-- <td>
+                                        <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
@@ -56,8 +69,8 @@
                                                 class="btn btn-danger"
                                                 onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
                                                 title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form> --}}
-                                    </td>
+                                        </form>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </x-table>

@@ -47,7 +47,15 @@
                                     <td>{{ $row->role }}</td>
                                     <td>{{ $row->notes }}</td>
                                     <td>
-                                        {{-- <a
+                                        <a href="{{ route('upload-file.index', ['stock_log_id' => $row->id, 'redirect_url'=>request()->path().'?stock_id='. app('request')->stock_id]) }}" class="btn btn-primary">Upload</a>
+
+                                    
+                                    @if ($row->upload_doc)
+                                        <a href="{{ $row->upload_doc }}" class="btn btn-primary">View</a>
+                                    @endif
+                                    </td>
+                                    {{-- <td>
+                                        <a
                                             href="{{ route('item.index', ['stock_id' => $row->id]) }}"
                                             class="btn btn-primary"
                                             title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
@@ -65,8 +73,8 @@
                                                 class="btn btn-danger"
                                                 onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
                                                 title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form> --}}
-                                    </td>
+                                        </form>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </x-table>

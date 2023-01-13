@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
+    //daftar master kategori
     Route::get('kategori/list', [CategoryController::class, 'list'])->name('category.list');
     Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
     Route::delete('kategori/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
@@ -55,12 +56,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('stock-edit', [StockController::class, 'edit'])->name('stock.edit');
     Route::patch('stock-update', [StockController::class, 'update'])->name('stock.update');
 
+    //Upload file menu asset
     Route::get('upload-doc', [LoanRecordController::class, 'upload'])->name('upload.index');
     Route::post('upload-doc', [LoanRecordController::class, 'doUpload'])->name('upload.store');
     
 
     Route::get('stock-out', [StockController::class, 'indexOut'])->name('stock.index-out');
 
+    //transaksi barang masuk asset
     Route::get('record-in', [LoanRecordController::class, 'recordIn'])->name('record-in.index');
     Route::post('record-in', [LoanRecordController::class, 'storeRecordIn'])->name('record-in.store');
 
@@ -73,15 +76,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-out-pertanggal', [LoanRecordController::class, 'cetakKeluar'])->name('record-out-pertanggal.exports');
 
 
-
+    //Transaksi barang keluar asset
     Route::get('record-out', [LoanRecordController::class, 'recordOut'])->name('record-out.index');
     Route::post('record-out', [LoanRecordController::class, 'storeRecordOut'])->name('record-out.store');
 
+    //Add Item
     Route::get('item', [ItemController::class, 'index'])->name('item.index');
     Route::get('item/detail/{id}', [ItemController::class, 'show'])->name('item.show');
     Route::patch('item/detail/{id}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
+    
 
     // Export PDF item asset
     Route::get('/item-exports', [ItemController::class, 'exportpdf'])->name('item.exports');
@@ -89,10 +94,15 @@ Route::group(['middleware' => ['auth']], function() {
     //Export PDF item non-asset
     Route::get('/item-exports-non', [ItemController::class, 'cetakpdf'])->name('item-non.exports');
 
-
+    //Transaksi barang masuk non-asset
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
     Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');
 
+    //Upload file menu non-asset
+    Route::get('upload-file', [StockNonAssetController::class, 'uploadFile'])->name('upload-file.index');
+    Route::post('upload-file', [StockNonAssetController::class, 'doUploadFile'])->name('upload-file.store');
+
+    //Transaksi barang keluar non-asset
     Route::get('record-non-asset-out', [StockNonAssetController::class, 'indexOut'])->name('record-non-asset-out.index');
     Route::post('record-non-asset-out', [StockNonAssetController::class, 'storeRecordOut'])->name('record-out-non-asset.index');
 
@@ -104,7 +114,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('record-non-out-pdf', [StockNonAssetController::class, 'cetakDate'])->name('record-non-out.exports');
     Route::get('record-non-out-pertanggal', [StockNonAssetController::class, 'cetakKeluar'])->name('record-non-out-pertanggal.exports');
 
-
+    //Add user
     Route::post('accounts', [AccountController::class, 'store'])->name('account.store');
     Route::get('accounts', [AccountController::class, 'index'])->name('account.index');
     Route::delete('accounts/{id}', [AccountController::class, 'destroy'])->name('account.destroy');

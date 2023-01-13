@@ -1,0 +1,39 @@
+@extends ('App')
+
+@section('content-header','Upload File')
+
+@section('content')
+<x-content>
+    <x-row>
+        <x-card-collapsible>
+          <form action="{{route('upload-file.store')}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" value="{{ app('request')->stock_log_id }}" name="stock_log_id">
+            <input type="hidden" value="{{ app('request')->redirect_url }}" name="redirect_url">
+            
+            <div class="form-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="customFile" name="upload_doc">
+                  <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+              </div>
+           
+            {{-- <div class="form-group">
+                <label for="exampleInputFile">File input</label>
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="exampleInputFile" name="upload_file">
+                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                  </div>
+                </div>
+              </div> --}}
+            
+            <button class="btn btn-primary">Save</button>
+          </form>
+        </x-card-collapsible>
+    </x-row>
+</x-content>
+@endsection

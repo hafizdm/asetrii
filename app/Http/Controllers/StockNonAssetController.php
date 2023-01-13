@@ -197,5 +197,45 @@ class StockNonAssetController extends Controller
         return $pdf->stream('item.pdf');
     }
 
+    public function uploadFile()
+    {
+        return view('pages.UploadDocumentNoAsset');
+    }
+
+    public function doUploadFile(Request $request)
+    {
+        //Memvalidasi request sesuai dengan aturan yang ingin di inputkan
+
+        $req = $request->validate([
+            'stock_log_id'=> [
+                'required',
+                'exists:stock_logs,id',
+            ],
+
+            'upload_doc' =>[
+                'required',
+                'file',
+            ],
+        ]);
+
+        $redirect = '/'. $request->redirect_url;
+        
+        $file=$req['upload_doc'];
+        $fileName=$file->getClientOriginalName();
+        $extension=$file->getClientOriginalExtension();
+        $fileName=time().".".$request->upload_doc->extension();
+        $path = $request->file('upload_doc')->storeAs(
+                'public/fileUpload', $fileName
+        );      
+        
+        // dd($path);
+        
+        $publicPath = str_replace('public','storage', $path);
+        StockLog::where('id', $req['stock_log_id'])->update(['upload_doc'=>$publicPath]);
+       
+        
+        return redirect($redirect)->with('message', 'Data berhasil disimpan');
+    }
+
 
 }

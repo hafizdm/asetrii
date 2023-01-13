@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\NullableType;
 
 return new class extends Migration
 {
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string("reciever")->nullable();
             $table->string("role")->nullable();
             $table->string("notes")->nullable();
+            $table->string('upload_doc')->nullable();
             $table->dateTime("moved_at");
             $table->timestamps();
             $table->softDeletes();
