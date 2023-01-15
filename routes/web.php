@@ -86,6 +86,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('item/detail/{id}', [ItemController::class, 'update'])->name('item.update');
     Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('item', [ItemController::class, 'store'])->name('item.store');
+    Route::get('item/detail-noasset/{id}', [ItemController::class, 'show2'])->name('item-noasset.show');
+    Route::patch('item/detail-noasset/{id}', [ItemController::class, 'update2'])->name('item-noasset.update');
+
     
 
     // Export PDF item asset

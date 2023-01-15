@@ -33,17 +33,35 @@ class ItemController extends Controller
 
     public function update(Request $request, $id)
     {
-        $post = Item::find($id)->update($request->all());
+        $item = Item::find($id);
+        $post = $item->update($request->all());
 
-        return back()->with('message', 'Data telah diperbaharui!');
+        return redirect()->route('item.index',['stock_id'=>$item->stock_id])->with('message', 'Data telah diperbaharui!');
     }
+
+    public function update2(Request $request, $id)
+    {
+        $item = Item::find($id);
+        $post = $item->update($request->all());
+
+        return redirect()->route('item.index',['stock_id'=>$item->stock_id])->with('message', 'Data telah diperbaharui!');
+    }
+
 
     public function show($id)
     {
         $data = Item::find($id);
         if (!$data) return redirect()->route('item.index');
 
-        return view('pages.ItemIndex', compact('data'));
+        return view('pages.ItemUpdate', compact('data'));
+    }
+
+    public function show2($id)
+    {
+        $data = Item::find($id);
+        if (!$data) return redirect()->route('item.index');
+
+        return view('pages.ItemUpdateNoAsset', compact('data'));
     }
 
     public function store(Request $request)
@@ -110,7 +128,8 @@ class ItemController extends Controller
                 'user_id' => auth()->user()->id,
                 'type' => 'in',
                 'amount' => $amount,
-                'moved_at' => now()
+                'moved_at' => now(),
+                'notes'=>"Item Baru"
             ]);
         }
 

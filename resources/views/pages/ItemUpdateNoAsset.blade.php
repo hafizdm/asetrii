@@ -34,12 +34,13 @@
                             :name="'name'"
                             :value="$data->name"
                             :required="true"></x-in-text>
-                        <x-in-text
-                            :label="'Kode Barang'"
-                            :placeholder="'Masukkan Kode Barang'"
-                            :value="$data->code"
-                            :name="'code'"></x-in-text>     
-
+                         <x-in-text
+                            :label="'Stock'"
+                            :name="'countStock'"
+                            :value="$data->countStock()"
+                            :disabled="true"
+                            :readonly="true"></x-in-text>
+                            
                         <x-col class="text-right">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </x-col>

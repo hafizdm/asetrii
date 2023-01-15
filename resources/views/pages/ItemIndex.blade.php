@@ -87,7 +87,7 @@
                                         <td>{{ $row->unit->label }}</td>
                                         <td>
                                             <a
-                                                href="{{ route('item.show', $row->id) }}"
+                                                href="{{ route('item-noasset.show', $row->id) }}"
                                                 class="btn btn-warning"
                                                 title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 

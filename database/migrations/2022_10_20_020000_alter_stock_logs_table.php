@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('stock_logs', function (Blueprint $table) {
             $table->index('item_id');
             $table->foreign('item_id')
-            ->references('id')->on('items');
+            ->references('id')->on('items')->onDelete('cascade');
 
             $table->index('user_id');       
             $table->foreign('user_id')
