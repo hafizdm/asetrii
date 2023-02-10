@@ -57,6 +57,9 @@
               <x-nav-item :icon="'fas fa-list'" :text="'Barang Masuk'" :href="route('record-non-asset-in.index', ['type' => 'non-asset'])" />
               <x-nav-item :icon="'fas fa-list'" :text="'Barang Keluar'" :href="route('record-non-asset-out.index', ['type' => 'non-asset'])" />
           @endif
+          @if(Auth::user()->role == 'hrd')
+              <x-nav-item :icon="'fas fa-fw fa-user'" :text="'Daftar Karyawan'" :href="'/'" />
+          @endif
         </ul>
 
         

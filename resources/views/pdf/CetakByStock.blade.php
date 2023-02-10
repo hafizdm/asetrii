@@ -93,6 +93,8 @@
                     <p style="font-style: italic;">(Direktur)</p>
 
                 </td>
+
+                @if(Auth::user()->role == 'admin')
                 <td style="width: 50%; text-align: center;">
                     <p>Responsible</p>
                     <br>
@@ -101,6 +103,7 @@
                     <p>{{ auth()->user()->name }}</p>
                     <p style="font-style: italic;">({{auth()->user()->position  }})</p>
                 </td>
+                @endif
         </table>
     </div>
 

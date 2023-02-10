@@ -24,7 +24,7 @@ class AccountController extends Controller
             'username' => ['required', Rule::unique('users', 'username')],
             'password' => ['required', 'min:8'],
             'password_confirmation' => ['required', 'same:password'],
-            'role' => ['required', Rule::in(['admin', 'superadmin', 'director'])]
+            'role' => ['required', Rule::in(['admin', 'superadmin', 'director', 'hrd'])]
         ]);
 
         $req['password'] = bcrypt($req['password']);
@@ -63,7 +63,7 @@ class AccountController extends Controller
             'username' => ['required', Rule::unique('users', 'username')->ignore($data->id)],
             'password' => ['nullable', 'min:8'],
             'password_confirmation' => ['required_with:password', 'same:password'],
-            'role' => ['required', Rule::in(['admin', 'superadmin', 'director'])]
+            'role' => ['required', Rule::in(['admin', 'superadmin', 'director', 'hrd'])]
         ]);
 
         if ($req['password']) {

@@ -5,6 +5,7 @@
         ['value' => 'superadmin', 'text' => 'Super Admin'],
         ['value' => 'admin', 'text' => 'Admin'],
         ['value' => 'director', 'text' => 'Direktur'],
+        ['value' => 'hrd', 'text' => 'Admin Hrd'],
     ];
 @endphp
 

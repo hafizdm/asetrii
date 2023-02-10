@@ -28,9 +28,13 @@ class DashboardController extends Controller
         $item = Item::where('stock_id', )->count();
         $loanIn = LoanRecord::where('loan_records.is_in', true)->count();
         $loanOut = LoanRecord::where('loan_records.is_in', false)->count();
+        $stockLogIn = StockLog::where('stock_logs.type', 'in')->count();
+        $stockLogOut = StockLog::where('stock_logs.type', 'out')->count();        
         $countAssets = Item::whereNotNull('code')
-                       ->count();
+                    ->count();
+        $countNoAssets = Item::whereNull('code')
+                    ->count();
 
-        return view('pages.Dashboard', compact('assets', 'nonAssets', 'user', 'loanIn', 'loanOut', 'item','countAssets'));
+        return view('pages.Dashboard', compact('assets', 'nonAssets', 'user', 'loanIn', 'loanOut', 'item','countAssets','countNoAssets','stockLogIn','stockLogOut'));
     }
 }

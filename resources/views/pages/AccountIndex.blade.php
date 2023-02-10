@@ -5,6 +5,7 @@
         ['value' => 'superadmin', 'text' => 'Super Admin'],
         ['value' => 'admin', 'text' => 'Admin'],
         ['value' => 'director', 'text' => 'Direktur'],
+        ['value' => 'hrd', 'text' => 'Admin Hrd'],
     ];
 
     $accountId = Auth::user()->id;
@@ -29,6 +30,7 @@
                                     if($row->role == 'superadmin') $role = 'Super Admin';
                                     else if($row->role == 'admin') $role = 'Admin';
                                     else if($row->role == 'director') $role = 'Direktur';
+                                    else if($row->role == 'hrd') $role = 'Admin Hrd';
                                 @endphp
 
                                 <tr>
