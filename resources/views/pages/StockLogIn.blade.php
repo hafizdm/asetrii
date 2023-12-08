@@ -36,7 +36,7 @@
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d M Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->moved_at)->format('d M Y') }}</td>
                                     <td>{{ $row->item->kind->name }}</td>
                                     <td>{{ $row->item->merk->name }}</td>
                                     <td>{{ $row->item->name }}</td>

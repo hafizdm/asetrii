@@ -21,4 +21,9 @@ class StockLog extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function stock()
+    {
+        return $this->hasOneThrough(Stock::class, Item::class, 'id', 'id', 'item_id', 'stock_id');
+    }
 }

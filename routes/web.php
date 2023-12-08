@@ -11,8 +11,10 @@ use App\Http\Controllers\{
     ItemNonAssetController,
     LoanRecordController,
     StockNonAssetController,
-    DashboardController
+    DashboardController,
+    KaryawanController
 };
+use App\Models\Karyawan;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    //created karyawan
+    Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+    Route::post('/karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
+
 
     //daftar master kategori
     Route::get('kategori/list', [CategoryController::class, 'list'])->name('category.list');
@@ -89,6 +96,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('item/detail-noasset/{id}', [ItemController::class, 'show2'])->name('item-noasset.show');
     Route::patch('item/detail-noasset/{id}', [ItemController::class, 'update2'])->name('item-noasset.update');
 
+   
     
 
     // Export PDF item asset
@@ -100,6 +108,13 @@ Route::group(['middleware' => ['auth']], function() {
     //Transaksi barang masuk non-asset
     Route::get('record-non-asset-in', [StockNonAssetController::class, 'indexIn'])->name('record-non-asset-in.index');
     Route::post('record-non-asset-in', [StockNonAssetController::class, 'store'])->name('record-in-non-asset.index');
+
+     //Summary Report non-asset
+     Route::get('summary-report', [StockNonAssetController::class, 'indexSummary'])->name('summary.index');
+
+     //record summary non-asset
+     Route::get('record-summary', [StockNonAssetController::class, 'summaryRecord'])->name('summary.record');
+
 
     //Upload file menu non-asset
     Route::get('upload-file', [StockNonAssetController::class, 'uploadFile'])->name('upload-file.index');

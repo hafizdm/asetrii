@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use DateTime;
+use App\Models\Item;
 use App\Models\Stock;
 use App\Models\StockLog;
-use DateTime;
+
+
 use Illuminate\Http\Request;
-
-
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class StockNonAssetController extends Controller
@@ -81,8 +82,12 @@ class StockNonAssetController extends Controller
 
         ]);
 
+        $prevLog = StockLog::where('item_id', $req['item_id'])->orderByDesc('moved_at')->firstOrFail();
+
         $req['user_id'] = auth()->user()->id;
         $req['type'] = 'in';
+        $req['last'] = $prevLog->current;
+        $req['current'] = $req['last'] + $req['amount'];
         StockLog::create($req);
 
 
@@ -102,13 +107,18 @@ class StockNonAssetController extends Controller
             'role' => ['required', 'max:255'],
         ]);
 
+        $prevLog = StockLog::where('item_id', $req['item_id'])->orderByDesc('moved_at')->firstOrFail();
+
         $req['user_id'] = auth()->user()->id;
         $req['type'] = 'out';
+        $req['last'] = $prevLog->current;
+        $req['current'] = $req['last'] - $req['amount'];
         StockLog::create($req);
 
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
+
 
     public function cetakTanggal()
     {
@@ -237,5 +247,90 @@ class StockNonAssetController extends Controller
         return redirect($redirect)->with('message', 'Data berhasil disimpan');
     }
 
+    public function indexSummary(Request $request)
+    {
+        $req = $request->validate([
+            'type' => ['required', 'in:asset,non-asset'],
+        ]);
+
+        $data = [];
+        $user = auth()->user();
+
+        if ($request->type) {
+            if ($user->role == 'admin') {
+                $data = Stock::where('type', $request->type)
+                    ->where('user_id', $user->id)
+                    ->paginate(15)
+                    ->withQueryString();
+            } else if ($user->role == 'director') {
+                $data = Stock::where('type', $request->type)
+                    ->paginate(15)
+                    ->withQueryString();
+            }
+        } else {
+            return redirect()->back()->withErrors('Stock tidak ditemukan.');
+        }
+      return view('pages/SummaryIndexNonAsset', compact('data'));
+    }
+
+    public function summaryRecord()
+    {
+        $stock = Stock::find(request()->query('stock_id', 0));
+
+        if ($stock == null) {
+            return redirect()->back()->withErrors('Stock tidak ditemukan.');
+        }
+
+        // Filter tanggal
+        $startDate = now()->subMonths(3);
+        $endDate = now()->endOfMonth();
+
+        $stockLogs = StockLog::query()
+            ->with('item', 'item.kind', 'item.merk')
+            ->whereBetween('moved_at', [$startDate, $endDate])
+            ->whereHas('stock', function ($q) use ($stock) {
+                return $q->where('stocks.id', $stock->id);
+            })
+            ->orderBy('moved_at')
+            ->get();
+
+        $data = $stockLogs->groupBy('moved_at')
+            ->map(function ($itemStockLogsGroupedByDate, $date) {
+                return $itemStockLogsGroupedByDate
+                    ->groupBy('item_id')
+                    ->map(function ($items) use ($date) {
+                        /** @var \Illuminate\Support\Collection<int, \App\Models\StockLog> $items */
+                        $stok = $items->first()->last;
+                        $barangMasuk = $items->where('type', 'in')->sum('amount');
+                        $barangKeluar = $items->where('type', 'out')->sum('amount');
+
+                        $stok += $barangMasuk;
+                        $stok -= $barangKeluar;
+                            
+                        $item =$items->first()->item;
+                        
+                        $obj = new \stdClass();
+                        $obj->date = $date;
+                        $obj->item_id = $item->id;
+                        $obj->item_name = $item->name;
+                        $obj->kind_name = $item->kind->name;
+                        $obj->merk_name = $item->merk->name;
+                        $obj->ukuran = $item->ukuran;
+                        $obj->transaction_count = $items->count();
+                        $obj->last_stock = $items->first()->last;
+                        $obj->in = $barangMasuk;
+                        $obj->out = $barangKeluar;
+                        $obj->current_stock = $stok;
+
+                        return $obj;
+                    })
+                    ->values()
+                    ->toArray();
+            })
+            ->flatten(1)
+            ->values()
+            ->toArray();
+        return view('pages/SummaryNonAsset', compact('data'));
+    }
 
 }
